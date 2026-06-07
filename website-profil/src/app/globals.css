@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #fdfdfd; /* Putih elegan dan profesional (sedikit lebih lembut dari murni putih) */
+  --foreground: #09090b; /* Zinc 950 */
+}
+
+.dark {
+  --background: #09090b; /* Zinc 950 */
+  --foreground: #fdfdfd; /* Putih elegan */
+}
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Custom Utilities for Glassmorphism */
+@utility glass {
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+@utility glass-dark {
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+@keyframes highlight-draw {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+.highlight {
+  position: relative;
+  display: inline;
+}
+
+.highlight::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  height: 100%;
+  width: 0%;
+  background-color: var(--foreground); /* ← langsung pakai yang sudah ada */
+  z-index: -1;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+
+.highlight.is-visible::after {
+  animation: highlight-draw var(--hl-duration, 2.5s) ease forwards;
+}
