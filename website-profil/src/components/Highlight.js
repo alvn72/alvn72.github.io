@@ -11,11 +11,28 @@ export function Highlight({ children, delay = 0, duration = 500 }) {
 
     el.style.setProperty('--hl-duration', `${duration}ms`)
 
-    const timer = setTimeout(() => {
-      el.classList.add('is-visible')
-    }, delay)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // masuk viewport — jalankan animasi
+            setTimeout(() => {
+              el.classList.add('is-visible')
+            }, delay)
+          } else {
+            // keluar viewport — reset animasi
+            el.classList.remove('is-visible')
+          }
+        })
+      },
+      {
+        threshold: 0.5,
+      }
+    )
 
-    return () => clearTimeout(timer)
+    observer.observe(el)
+
+    return () => observer.disconnect()
   }, [delay, duration])
 
   return (

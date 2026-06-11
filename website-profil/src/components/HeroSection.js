@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, LockKeyhole } from "lucide-react";
 import Image from "next/image";
 import { Highlight } from "./Highlight";
+import { Tooltip } from './Tooltip';
 
 export default function HeroSection() {
   const containerVariants = {
@@ -43,34 +44,37 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
         >
-          <motion.div variants={itemVariants} className="mb-6">
+          <motion.div variants={itemVariants} className="hidden md:block mb-6">
             <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-zinc-100 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 shadow-sm flex items-center gap-2 w-max">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
               </span>
-              Tersedia untuk proyek baru
+              Excited For New Opportunities
             </span>
           </motion.div>
 
           <motion.h1
             variants={itemVariants}
-            className="text-4xl lg:text-6xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 mb-6 leading-[1.1]"
+            className="text-center lg:text-left text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 mb-6 leading-[1.15]"
           >
-            " Semoga Kita Semua <br />
-            <span className="">
-              <Highlight delay={300} duration={2500}>
-                &nbsp;Menjadi Berkat&nbsp;
-              </Highlight> 
-             ".
-          </span>
+            <span className="block">&ldquo;Semoga Kita Semua</span>
+            <span className="block mt-1">
+              <span className="whitespace-nowrap">
+                <Highlight delay={300} duration={2500}>
+                  &nbsp;Menjadi Berkat&nbsp;
+                </Highlight>
+                &rdquo;.
+              </span>
+            </span>
           </motion.h1>
 
           <motion.p
             variants={itemVariants}
             className="text-lg text-zinc-600 dark:text-zinc-400 mb-10 max-w-xl leading-relaxed"
           >
-            Halo, saya Alvin. Pengembang web yang merancang antarmuka minimalis nan elegan, memadukan estetika monokrom dengan performa tinggi.
+            {/* Halo, saya Alvin 👋. Saya adalah Mahasiswa yang memiliki ketertarikan pada dunia bisnis terutama bisnis digital dan pengelolaan properti serta aktif dalam mengikuti perkembangan di dunia IT dan Digital seperti Kecerdasan Buatan, Website Development Dan Digital Marketing.  */}
+            Halo, saya Alvin 👋. Saya mahasiswa yang fokus mendalami bisnis digital dan manajemen properti. Selain itu, saya aktif mengikuti perkembangan dunia IT, seperti kecerdasan buatan (AI), pengembangan web, serta pemasaran digital.
           </motion.p>
 
           <motion.div
@@ -79,23 +83,37 @@ export default function HeroSection() {
           >
             {/* Main Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 items-center">
-              <button className="w-full sm:w-auto flex justify-center items-center gap-2 px-8 py-3.5 rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-medium hover:scale-105 transition-transform duration-300 shadow-md">
-                Mulai Proyek
+              <button onClick={() => {
+                document.getElementById('contact')?.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start',
+                })
+              }} className="w-full sm:w-auto flex justify-center items-center gap-2 px-8 py-3.5 rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-medium hover:scale-105 transition-transform duration-300 shadow-md">
+                Let's Talk
                 <ArrowRight size={18} />
               </button>
-              
-              <button className="w-full sm:w-auto flex justify-center items-center gap-2 px-8 py-3.5 rounded-full glass dark:glass-dark font-medium hover:scale-105 transition-transform duration-300 group">
+
+              <button
+              onClick={() => {
+                document.getElementById('about')?.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start',
+                })
+              }}
+              className="w-full sm:w-auto flex justify-center items-center gap-2 px-8 py-3.5 rounded-full glass dark:glass-dark font-medium hover:scale-105 transition-transform duration-300 group">
                 <Sparkles size={18} className="text-zinc-500 dark:text-zinc-400 group-hover:text-amber-500 transition-colors" />
-                Side Projects
+                Track Record
               </button>
             </div>
 
             {/* Medical Record Button (Subtle but professional) */}
             <div className="mt-2 flex justify-center lg:justify-start">
+             <Tooltip text="Ini adalah rekam medis saya, jika dalam kondisi mendesak, cari password dan hubungi orang terdekat saya" position={{ base: 'top', md: 'right' }} maxWidth={240}>
               <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors group">
                 <LockKeyhole size={16} className="group-hover:scale-110 transition-transform" />
                 Private Medical Record
               </button>
+            </Tooltip>
             </div>
           </motion.div>
         </motion.div>

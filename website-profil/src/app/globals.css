@@ -46,28 +46,20 @@ body {
 }
 
 @keyframes highlight-draw {
-  from { width: 0%; }
-  to   { width: 100%; }
+  from { background-size: 0% 100%; }
+  to   { background-size: 100% 100%; }
 }
 
 .highlight {
   position: relative;
   display: inline;
+  background-image: linear-gradient(var(--foreground), var(--foreground));
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: 0 88%;
+  padding-bottom: 2px;
 }
 
-.highlight::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 2px;
-  height: 100%;
-  width: 0%;
-  background-color: var(--foreground); /* ← langsung pakai yang sudah ada */
-  z-index: -1;
-  border-radius: 2px;
-  transition: background-color 0.3s ease;
-}
-
-.highlight.is-visible::after {
+.highlight.is-visible {
   animation: highlight-draw var(--hl-duration, 2.5s) ease forwards;
 }

@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import TopographicBackground from "@/components/TopographicBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col selection:bg-zinc-800 selection:text-zinc-50 dark:selection:bg-zinc-200 dark:selection:text-zinc-900 transition-colors duration-300">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <TopographicBackground />
           {children}
         </ThemeProvider>
       </body>
