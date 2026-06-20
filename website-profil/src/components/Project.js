@@ -37,8 +37,8 @@ const projects = [
       "Aplikasi pengaduan berbasis web dengan fitur manajemen laporan, autentikasi pengguna, dan dashboard admin.",
     tags: ["Next.js", "Strapi", "SQLite"],
     github: "https://github.com/alvn72/UKKPengaduanAlvin",
-    live: null,
-    status: "Selesai",
+    live: "https://ukkreal.vercel.app/",
+    status: "Live",
   },
   {
     title: "AI Local Stack",

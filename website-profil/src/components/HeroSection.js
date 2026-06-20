@@ -82,13 +82,13 @@ export default function HeroSection() {
             className="flex flex-col gap-4 w-full sm:w-auto"
           >
             {/* Main Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 items-center">
+            <div className="flex flex-col sm:flex-row gap-4 items-center w-full">
               <button onClick={() => {
                 document.getElementById('contact')?.scrollIntoView({
                   behavior: 'smooth',
                   block: 'start',
                 })
-              }} className="w-full sm:w-auto flex justify-center items-center gap-2 px-8 py-3.5 rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-medium hover:scale-105 transition-transform duration-300 shadow-md">
+              }} className="w-[85%] sm:w-auto flex justify-center items-center gap-2 px-6 py-2.5 sm:px-8 sm:py-3.5 rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-medium hover:scale-105 transition-transform duration-300 shadow-md">
                 Let's Talk
                 <ArrowRight size={18} />
               </button>
@@ -100,7 +100,7 @@ export default function HeroSection() {
                   block: 'start',
                 })
               }}
-              className="w-full sm:w-auto flex justify-center items-center gap-2 px-8 py-3.5 rounded-full glass dark:glass-dark font-medium hover:scale-105 transition-transform duration-300 group">
+              className="w-[85%] sm:w-auto flex justify-center items-center gap-2 px-6 py-2.5 sm:px-8 sm:py-3.5 rounded-full glass dark:glass-dark font-medium hover:scale-105 transition-transform duration-300 group">
                 <Sparkles size={18} className="text-zinc-500 dark:text-zinc-400 group-hover:text-amber-500 transition-colors" />
                 Track Record
               </button>
@@ -109,7 +109,9 @@ export default function HeroSection() {
             {/* Medical Record Button (Subtle but professional) */}
             <div className="mt-2 flex justify-center lg:justify-start">
              <Tooltip text="Ini adalah rekam medis saya, jika dalam kondisi mendesak, cari password dan hubungi orang terdekat saya" position={{ base: 'top', md: 'right' }} maxWidth={240}>
-              <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors group">
+              <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors group" onClick={() => {
+                window.dispatchEvent(new Event('openMedicalRecord'))
+              }}> 
                 <LockKeyhole size={16} className="group-hover:scale-110 transition-transform" />
                 Private Medical Record
               </button>
@@ -122,15 +124,29 @@ export default function HeroSection() {
         <motion.div 
           className="flex-1 flex justify-center lg:justify-end w-full max-w-lg lg:max-w-none"
           initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          animate={{ 
+            opacity: 1, 
+            scale: 1, 
+            filter: "blur(0px)",
+            y: [0, -6, 0]
+          }}
+          transition={{ 
+            opacity: { duration: 0.8, ease: "easeOut" },
+            scale: { duration: 0.8, ease: "easeOut" },
+            filter: { duration: 0.8, ease: "easeOut" },
+            y: {
+              repeat: Infinity,
+              duration: 6,
+              ease: "easeInOut"
+            }
+          }}
         >
           <div className="relative group w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] lg:w-[450px] lg:h-[450px]">
             {/* Glowing effect behind image */}
-            <div className="absolute -inset-1 bg-gradient-to-tr from-zinc-200 to-zinc-400 dark:from-zinc-800 dark:to-zinc-500 rounded-3xl blur-2xl opacity-40 group-hover:opacity-70 transition duration-700"></div>
+            <div className="absolute -inset-1 bg-gradient-to-tr from-zinc-200 to-zinc-400 dark:from-zinc-800 dark:to-zinc-500 rounded-3xl blur-2xl opacity-40 group-hover:opacity-70 transition duration-700 animate-pulse"></div>
             
             {/* Image Container with Glassmorphism Border */}
-            <div className="relative w-full h-full rounded-3xl overflow-hidden glass dark:glass-dark p-2 lg:p-3 shadow-2xl transform group-hover:-translate-y-2 transition duration-500 z-10">
+            <div className="relative w-full h-full rounded-3xl overflow-hidden glass dark:glass-dark p-2 lg:p-3 shadow-2xl transform lg:group-hover:-translate-y-2 transition duration-500 z-10">
               <div className="relative w-full h-full rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900">
                 
                 {/* Wajah - Background layer */}
@@ -138,11 +154,11 @@ export default function HeroSection() {
                   src="/alvinTransparan.png"
                   alt="Alvin Profile Picture"
                   fill
-                  className="object-cover grayscale transition duration-700 group-hover:grayscale-0 group-hover:scale-105"
+                  className="object-cover transition duration-700 lg:grayscale lg:group-hover:grayscale-0 group-hover:scale-105"
                   sizes="(max-width: 768px) 280px, (max-width: 1024px) 350px, 450px"
                   priority
                 />
-
+                
                 {/* Nametag - Floating INSIDE the frame, at the top */}
                 <motion.div 
                   className="absolute top-4 sm:top-6 left-1/2 -translate-x-1/2 w-32 sm:w-40 lg:w-48 h-auto z-20 drop-shadow-2xl"
