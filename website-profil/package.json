@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "deploy": "next build && touch out/.nojekyll && gh-pages -d out --dotfiles"
+    "deploy": "next build && touch out/.nojekyll && gh-pages -d out --dotfiles",
+    "secure-data": "node scripts/encrypt.js"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.35.0",

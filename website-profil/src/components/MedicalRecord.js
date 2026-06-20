@@ -1,11 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { LockKeyhole, X, ArrowRight, Activity, FileText, AlertCircle, Phone } from "lucide-react";
+import { LockKeyhole, X, ArrowRight, Activity, FileText, AlertCircle, Phone, Globe } from "lucide-react";
 import CryptoJS from "crypto-js";
-
-// Payload terenkripsi. Tidak ada data sensitif dalam bentuk teks biasa.
-const ENCRYPTED_PAYLOAD = "U2FsdGVkX1/pgwQZt5+/ITMfydX+3QHi47hZtmOqRoxyNZzevT72YckN8IJso6VkFuw9Eq4Wg7Ch+izlo9He4oVT+zUy4cwcnx9d96Uv81lLpTVS/zJQTifp7/il954QyJYlrjgo3hh5jRGLnwxGs0RGsh+WY4rsxXFEJ5XPI8doi3raZdYCxZs3TqRLGcd9mpIwrtz20DRXT3XpKYwuKnA5jnMz72wXIyAyTYPyav4LklObTfJg1G8PYOYcqnYgVqofA2rDf1bkt0PHSwSJ8vhrrlS9VHNISrIQQfEXrEL5mSEgP0JOXEmlbgVAOA8JReqGrzNvTBxooWeBpedsvmHVQpZkk2m3Dgjyzd/Vulh4XTTMPVVWYYk8SRJizQdBdMNJXU67ZvtLoy9dOl0PkeEwzV/+kOgnLuwUHOKUvpCME4L2g66QiNVXzv2rgcZkovCRA//y/umc2R+c1RmvQQxDSCHEM4PoNdw5kJ9zbd1gl4OrYTPCiVxQt+V4vFmw93rzzgv+4RkaBqPleNxeUQFUnNWGvWg4Cv2A3drxGzIdsJ1N+cNya+eGFsziJYv2RFqKhJklulvljssUVNBSIw/YGXkQw/NHLDYV72zWATlIAAsDjB2q669eXPfOkL32gSAXFscEmUXb8XUIhSFgWgecZtr6efHybFc+X7di4h5dS2eICxjYpUZNI4LQBAjhA2CbpPGLw6UjexILxCQkmHSexvyFYAp1KV36fcWkd2+nNu4SbOTVU+2GPw3H4GdUhlkme4uO8glnePY8cHZD4w==";
+import { ENCRYPTED_MEDICAL_DATA } from "../data/medical-data.encrypted";
 
 export function MedicalRecord() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +11,7 @@ export function MedicalRecord() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState(false);
   const [patientData, setPatientData] = useState(null);
+  const [lang, setLang] = useState("id");
 
   useEffect(() => {
     // Listener untuk membuka modal dari tombol di HeroSection
@@ -29,6 +28,7 @@ export function MedicalRecord() {
       setPassword("");
       setError(false);
       setPatientData(null);
+      setLang("id");
     }, 300);
   };
 
@@ -36,7 +36,7 @@ export function MedicalRecord() {
     e.preventDefault();
     try {
       // Coba dekripsi payload dengan password yang dimasukkan
-      const bytes = CryptoJS.AES.decrypt(ENCRYPTED_PAYLOAD, password);
+      const bytes = CryptoJS.AES.decrypt(ENCRYPTED_MEDICAL_DATA, password);
       const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
       
       // Jika berhasil, tampilkan data
@@ -49,6 +49,9 @@ export function MedicalRecord() {
       setPatientData(null);
     }
   };
+
+  // Data berdasarkan bahasa yang dipilih
+  const currentData = patientData ? patientData[lang] : null;
 
   return (
     <AnimatePresence>
@@ -124,13 +127,32 @@ export function MedicalRecord() {
                       <Activity size={28} />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">KARTU REKAM MEDIS</h2>
+                      <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
+                        {lang === "id" ? "KARTU REKAM MEDIS" : "MEDICAL RECORD CARD"}
+                      </h2>
                       <p className="text-sm text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mt-0.5">Confidential Medical Report</p>
                     </div>
                   </div>
-                  <div className="text-left sm:text-right">
-                    <div className="text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1">Record ID</div>
-                    <div className="font-mono text-zinc-900 dark:text-zinc-100">{patientData.recordId}</div>
+                  <div className="flex items-center gap-6">
+                    {/* Language Toggle */}
+                    <div className="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg">
+                      <button 
+                        onClick={() => setLang("id")}
+                        className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${lang === "id" ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 shadow-sm" : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"}`}
+                      >
+                        ID
+                      </button>
+                      <button 
+                        onClick={() => setLang("en")}
+                        className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${lang === "en" ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 shadow-sm" : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"}`}
+                      >
+                        EN
+                      </button>
+                    </div>
+                    <div className="text-left sm:text-right hidden sm:block">
+                      <div className="text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1">Record ID</div>
+                      <div className="font-mono text-zinc-900 dark:text-zinc-100">{currentData.recordId}</div>
+                    </div>
                   </div>
                 </div>
 
@@ -141,26 +163,26 @@ export function MedicalRecord() {
                     <div>
                       <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 uppercase tracking-wider flex items-center gap-2 mb-4">
                         <FileText size={16} className="text-zinc-500" />
-                        Data Pasien
+                        {lang === "id" ? "Data Pasien" : "Patient Data"}
                       </h3>
                       <div className="bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl p-5 space-y-4 border border-zinc-100 dark:border-zinc-800/80">
                         <div>
-                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Nama Lengkap</div>
-                          <div className="font-medium text-zinc-900 dark:text-zinc-100">{patientData.nama}</div>
+                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">{lang === "id" ? "Nama Lengkap" : "Full Name"}</div>
+                          <div className="font-medium text-zinc-900 dark:text-zinc-100">{currentData.nama}</div>
                         </div>
                         <div>
-                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Tanggal Lahir</div>
-                          <div className="font-medium text-zinc-900 dark:text-zinc-100">{patientData.tanggalLahir}</div>
+                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">{lang === "id" ? "Tanggal Lahir" : "Date of Birth"}</div>
+                          <div className="font-medium text-zinc-900 dark:text-zinc-100">{currentData.tanggalLahir}</div>
                         </div>
                         <div>
-                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Golongan Darah</div>
+                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">{lang === "id" ? "Golongan Darah" : "Blood Type"}</div>
                           <div className="inline-flex items-center justify-center px-3 py-1 rounded-md bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 font-bold text-lg">
-                            {patientData.golonganDarah}
+                            {currentData.golonganDarah}
                           </div>
                         </div>
                         <div>
-                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Tinggi / Berat</div>
-                          <div className="font-medium text-zinc-900 dark:text-zinc-100">{patientData.tinggiBerat}</div>
+                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">{lang === "id" ? "Tinggi / Berat" : "Height / Weight"}</div>
+                          <div className="font-medium text-zinc-900 dark:text-zinc-100">{currentData.tinggiBerat}</div>
                         </div>
                       </div>
                     </div>
@@ -168,12 +190,12 @@ export function MedicalRecord() {
                     <div>
                       <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 uppercase tracking-wider flex items-center gap-2 mb-4">
                         <Phone size={16} className="text-zinc-500" />
-                        Kontak Darurat
+                        {lang === "id" ? "Kontak Darurat" : "Emergency Contact"}
                       </h3>
                       <div className="bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl p-5 space-y-4 border border-zinc-100 dark:border-zinc-800/80">
                         <div>
-                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">Hubungan: {patientData.hubunganKontak}</div>
-                          <div className="font-medium text-zinc-900 dark:text-zinc-100">{patientData.kontakDarurat}</div>
+                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">{lang === "id" ? "Hubungan: " : "Relationship: "}{currentData.hubunganKontak}</div>
+                          <div className="font-medium text-zinc-900 dark:text-zinc-100">{currentData.kontakDarurat}</div>
                         </div>
                       </div>
                     </div>
@@ -184,31 +206,31 @@ export function MedicalRecord() {
                     <div>
                       <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 uppercase tracking-wider flex items-center gap-2 mb-4">
                         <AlertCircle size={16} className="text-zinc-500" />
-                        Kondisi Medis & Alergi
+                        {lang === "id" ? "Kondisi Medis & Alergi" : "Medical Conditions & Allergies"}
                       </h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
-                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-2 uppercase tracking-wider">Alergi Obat</div>
-                          <div className="font-medium text-zinc-900 dark:text-zinc-100">- {patientData.alergiObat}</div>
+                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-2 uppercase tracking-wider">{lang === "id" ? "Alergi Obat" : "Drug Allergies"}</div>
+                          <div className="font-medium text-zinc-900 dark:text-zinc-100">- {currentData.alergiObat}</div>
                         </div>
                         <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
-                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-2 uppercase tracking-wider">Alergi Makanan</div>
-                          <div className="font-medium text-zinc-900 dark:text-zinc-100">- {patientData.alergiMakanan}</div>
+                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-2 uppercase tracking-wider">{lang === "id" ? "Alergi Makanan" : "Food Allergies"}</div>
+                          <div className="font-medium text-zinc-900 dark:text-zinc-100">- {currentData.alergiMakanan}</div>
                         </div>
                         <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 sm:col-span-2">
-                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-2 uppercase tracking-wider">Kondisi Penyerta (Comorbid)</div>
-                          <div className="font-medium text-zinc-900 dark:text-zinc-100">- {patientData.kondisiPenyerta}</div>
+                          <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-2 uppercase tracking-wider">{lang === "id" ? "Kondisi Penyerta (Comorbid)" : "Underlying Conditions (Comorbid)"}</div>
+                          <div className="font-medium text-zinc-900 dark:text-zinc-100">- {currentData.kondisiPenyerta}</div>
                         </div>
                       </div>
                     </div>
 
                     <div>
                       <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 uppercase tracking-wider mb-4">
-                        Catatan Medis Tambahan
+                        {lang === "id" ? "Catatan Medis Tambahan" : "Additional Medical Notes"}
                       </h3>
                       <div className="prose dark:prose-invert prose-sm max-w-none text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5">
-                        <p className="mb-2">{patientData.catatan}</p>
-                        <p><strong>Tindakan Medis Sebelumnya:</strong> {patientData.tindakanMedis}</p>
+                        <p className="mb-2">{currentData.catatan}</p>
+                        <p><strong>{lang === "id" ? "Tindakan Medis Sebelumnya:" : "Previous Medical Procedures:"}</strong> {currentData.tindakanMedis}</p>
                       </div>
                     </div>
                   </div>
@@ -216,7 +238,7 @@ export function MedicalRecord() {
 
                 {/* Footer Rekam Medis */}
                 <div className="mt-8 pt-6 border-t border-zinc-200 dark:border-zinc-800 flex justify-between items-center text-xs text-zinc-500 dark:text-zinc-400">
-                  <div>Data terakhir diperbarui: {patientData.lastUpdated}</div>
+                  <div>{lang === "id" ? "Data terakhir diperbarui:" : "Last updated:"} {currentData.lastUpdated}</div>
                   <div className="uppercase tracking-widest font-semibold">Confidential</div>
                 </div>
               </div>
