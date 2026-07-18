@@ -3,36 +3,43 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #fdfdfd; /* Putih elegan dan profesional (sedikit lebih lembut dari murni putih) */
-  --foreground: #09090b; /* Zinc 950 */
+  --background: #fafafa; /* Alabaster */
+  --foreground: #111111; /* Charcoal */
+  --accent: #c5a059; /* Champagne Gold */
 }
 
 .dark {
-  --background: #09090b; /* Zinc 950 */
-  --foreground: #fdfdfd; /* Putih elegan */
+  --background: #050505; /* Onyx Black */
+  --foreground: #eaeaea; /* Silver */
+  --accent: #d4af37; /* Metallic Gold */
 }
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-sans: var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
 }
 
 /* Custom Utilities for Glassmorphism */
 @utility glass {
-  background-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  background-color: rgba(250, 250, 250, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(17, 17, 17, 0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
 }
 
 @utility glass-dark {
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  background-color: rgba(5, 5, 5, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(234, 234, 234, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 body {

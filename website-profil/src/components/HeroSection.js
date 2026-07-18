@@ -5,27 +5,29 @@ import { ArrowRight, Sparkles, LockKeyhole } from "lucide-react";
 import Image from "next/image";
 import { Highlight } from "./Highlight";
 import { Tooltip } from './Tooltip';
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function HeroSection() {
+  const { t } = useLanguage();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 20,
+        type: "tween",
+        ease: [0.22, 1, 0.36, 1],
+        duration: 1.2,
       },
     },
   };
@@ -45,26 +47,25 @@ export default function HeroSection() {
           animate="visible"
         >
           <motion.div variants={itemVariants} className="hidden md:block mb-6">
-            <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-zinc-100 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 shadow-sm flex items-center gap-2 w-max">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
+            <span className="px-5 py-2 rounded-full text-xs uppercase tracking-[0.2em] font-semibold bg-transparent text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800/60 flex items-center gap-3 w-max">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#c5a059] dark:bg-[#d4af37]"></span>
               </span>
-              Excited For New Opportunities
+              {t.hero.badge}
             </span>
           </motion.div>
 
           <motion.h1
             variants={itemVariants}
-            className="text-center lg:text-left text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 mb-6 leading-[1.15]"
+            className="text-center lg:text-left text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 mb-6 leading-[1.05] font-heading"
           >
-            <span className="block">&ldquo;Semoga Kita Semua</span>
-            <span className="block mt-1">
+            <span className="block whitespace-nowrap">{t.hero.quoteLine1}</span>
+            <span className="block lg:mt-4">
               <span className="whitespace-nowrap">
                 <Highlight delay={300} duration={2500}>
-                  &nbsp;Menjadi Berkat&nbsp;
+                  &nbsp;{t.hero.quoteHighlight}&nbsp;
                 </Highlight>
-                &rdquo;.
+                {t.hero.quoteLine2}
               </span>
             </span>
           </motion.h1>
@@ -73,8 +74,7 @@ export default function HeroSection() {
             variants={itemVariants}
             className="text-lg text-zinc-600 dark:text-zinc-400 mb-10 max-w-xl leading-relaxed"
           >
-            {/* Halo, saya Alvin 👋. Saya adalah Mahasiswa yang memiliki ketertarikan pada dunia bisnis terutama bisnis digital dan pengelolaan properti serta aktif dalam mengikuti perkembangan di dunia IT dan Digital seperti Kecerdasan Buatan, Website Development Dan Digital Marketing.  */}
-            Halo, saya Alvin 👋. Saya mahasiswa yang fokus mendalami bisnis digital dan manajemen properti. Selain itu, saya aktif mengikuti perkembangan dunia IT, seperti kecerdasan buatan (AI), pengembangan web, serta pemasaran digital.
+            {t.hero.description}
           </motion.p>
 
           <motion.div
@@ -88,8 +88,8 @@ export default function HeroSection() {
                   behavior: 'smooth',
                   block: 'start',
                 })
-              }} className="w-[85%] sm:w-auto flex justify-center items-center gap-2 px-6 py-2.5 sm:px-8 sm:py-3.5 rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-medium hover:scale-105 transition-transform duration-300 shadow-md">
-                Let's Talk
+              }} className="w-[85%] sm:w-auto flex justify-center items-center gap-3 px-8 py-3.5 rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors duration-500">
+                {t.hero.btnTalk}
                 <ArrowRight size={18} />
               </button>
 
@@ -100,20 +100,20 @@ export default function HeroSection() {
                   block: 'start',
                 })
               }}
-              className="w-[85%] sm:w-auto flex justify-center items-center gap-2 px-6 py-2.5 sm:px-8 sm:py-3.5 rounded-full glass dark:glass-dark font-medium hover:scale-105 transition-transform duration-300 group">
-                <Sparkles size={18} className="text-zinc-500 dark:text-zinc-400 group-hover:text-amber-500 transition-colors" />
-                Track Record
+              className="w-[85%] sm:w-auto flex justify-center items-center gap-3 px-8 py-3.5 rounded-full glass dark:glass-dark font-medium transition-colors duration-500 group hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+                <Sparkles size={16} className="text-[#c5a059] dark:text-[#d4af37] opacity-80" />
+                {t.hero.btnTrack}
               </button>
             </div>
 
             {/* Medical Record Button (Subtle but professional) */}
             <div className="mt-2 flex justify-center lg:justify-start">
-             <Tooltip text="Ini adalah rekam medis saya, jika dalam kondisi mendesak, cari password dan hubungi orang terdekat saya" position={{ base: 'top', md: 'right' }} maxWidth={240}>
+             <Tooltip text={t.hero.medicalTooltip} position={{ base: 'top', md: 'right' }} maxWidth={240}>
               <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors group" onClick={() => {
                 window.dispatchEvent(new Event('openMedicalRecord'))
               }}> 
                 <LockKeyhole size={16} className="group-hover:scale-110 transition-transform" />
-                Private Medical Record
+                {t.hero.btnMedical}
               </button>
             </Tooltip>
             </div>
@@ -143,7 +143,7 @@ export default function HeroSection() {
         >
           <div className="relative group w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] lg:w-[450px] lg:h-[450px]">
             {/* Glowing effect behind image */}
-            <div className="absolute -inset-1 bg-gradient-to-tr from-zinc-200 to-zinc-400 dark:from-zinc-800 dark:to-zinc-500 rounded-3xl blur-2xl opacity-40 group-hover:opacity-70 transition duration-700 animate-pulse"></div>
+            <div className="absolute -inset-1 bg-gradient-to-tr from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-700 rounded-3xl blur-3xl opacity-20 group-hover:opacity-40 transition duration-1000"></div>
             
             {/* Image Container with Glassmorphism Border */}
             <div className="relative w-full h-full rounded-3xl overflow-hidden glass dark:glass-dark p-2 lg:p-3 shadow-2xl transform lg:group-hover:-translate-y-2 transition duration-500 z-10">

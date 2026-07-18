@@ -1,0 +1,195 @@
+{
+  "hero": {
+    "badge": "Semangat untuk Peluang Baru",
+    "quoteLine1": "“Semoga Kita Semua",
+    "quoteHighlight": "Menjadi Berkat",
+    "quoteLine2": "”.",
+    "description": "Halo, saya Alvin 👋. Saya mahasiswa yang fokus mendalami bisnis digital dan manajemen properti. Selain itu, saya aktif mengikuti perkembangan dunia IT, seperti kecerdasan buatan (AI), pengembangan web, serta pemasaran digital.",
+    "btnTalk": "Let's Talk",
+    "btnTrack": "Track Record",
+    "btnMedical": "Private Medical Record",
+    "medicalTooltip": "Ini adalah rekam medis saya, jika dalam kondisi mendesak, cari password dan hubungi orang terdekat saya"
+  },
+  "about": {
+    "badge": "Tentang Saya",
+    "titlePrefix": "Siapa",
+    "titleHighlight": "Alvin?",
+    "descriptionPart1": "Alvin Nugraha",
+    "descriptionPart2": " atau sering dipanggil ",
+    "descriptionPart3": "alvn72",
+    "descriptionPart4": " adalah mahasiswa ITB STIKOM BALI Jurusan Bisnis Digital yang memiliki latar belakang pendidikan formal perangkat lunak di SMK WIRA HARAPAN",
+    "btnTouch": "Hubungi Saya",
+    "btnProjects": "Lihat Kreasi Saya",
+    "skillsTitle": "Skills & Expertise",
+    "skills": [
+      { "label": "Digital Business", "iconKey": "Cpu" },
+      { "label": "Property Management & Owner", "iconKey": "Cpu" }
+    ],
+    "expTitle": "Pengalaman Profesional",
+    "experiences": [
+      {
+        "title": "High School Internship",
+        "place": "Teksa Digital",
+        "period": "Juni - Oktober 2025",
+        "iconKey": "Briefcase"
+      },
+      {
+        "title": "Wakil Ketua Event Jobfair",
+        "place": "SMK WIRA HARAPAN",
+        "period": "MEI - 2026",
+        "iconKey": "GraduationCap"
+      },
+      {
+        "title": "Konten Kreator & Brand Owner",
+        "place": "alvn72",
+        "period": "Juli 2026 - Sekarang",
+        "iconKey": "GraduationCap"
+      },
+      {
+        "title": "Property Business",
+        "place": "Management & Owner",
+        "period": "Februari 2026 - Sekarang",
+        "iconKey": "GraduationCap"
+      }
+    ],
+    "photoTitle": "Foto Lapangan",
+    "photos": [
+      {
+        "src": "/DokumPKL-Wira.jpg",
+        "alt": "Foto lapangan 1",
+        "caption": "Internship / PKL di Teksa Digital"
+      },
+      {
+        "src": "/sertifikatPKL-Wira.jpg",
+        "alt": "Foto lapangan 2",
+        "caption": "Sertifikat Internship / PKL di Teksa Digital"
+      },
+      {
+        "src": "/sertifikatPublicSpeaking.jpeg",
+        "alt": "Foto lapangan 3",
+        "caption": "Pengalaman Seminar Public Speaking"
+      },
+      {
+        "src":"/KarmelCoffee.jpg",
+        "alt": "Foto lapangan 4",
+        "caption": "Pengalaman Kursus Barista Di Karmel Cafetaria"
+      },
+      {
+        "src":"/P5-Ecocycle.jpg",
+        "alt": "Foto lapangan 5",
+        "caption": "Pengalaman Projek P5-Ecocycle"
+      },
+      {
+        "src": "/Jobfair-Wira.jpg",
+        "alt": "Name Tag Petugas JobFair Wira Harapan 2025 ",
+        "caption": "Pengalaman Wakil Ketua Perlengkapan Event Jobfair "
+      }
+    ]
+  },
+  "project": {
+    "badge": "Projects",
+    "titlePrefix": "Apa yang",
+    "titleHighlight": "Sudah Dibuat?",
+    "description": "Kumpulan project yang pernah dikerjakan, mulai dari web app, tools, hingga bisnis digital.",
+    "links": {
+      "source": "Source Code",
+      "live": "Live Demo"
+    },
+    "items": [
+      {
+        "title": "Website Profil",
+        "description": "Website portofolio personal dengan desain monokrom glassmorphism, animasi Framer Motion, dan fitur dark/light mode.",
+        "tags": ["Next.js", "Tailwind CSS", "Framer Motion"],
+        "github": "https://github.com/alvn72/alvn72.github.io",
+        "live": "https://alvn72.github.io",
+        "status": "Live",
+        "image": "/images/project-portfolio.png"
+      },
+      {
+        "title": "Pengaduan Alvin",
+        "description": "Aplikasi pengaduan berbasis web dengan fitur manajemen laporan, autentikasi pengguna, dan dashboard admin.",
+        "tags": ["Next.js", "Strapi", "SQLite"],
+        "github": "https://github.com/alvn72/UKKPengaduanAlvin",
+        "live": "https://ukkreal.vercel.app/",
+        "status": "Live",
+        "image": "/images/project-pengaduan.png"
+      },
+      {
+        "title": "Marga Pakerti Website",
+        "description": "Website untuk Organisasi Nirlaba",
+        "tags": ["Next.js", "Tailwind CSS", "Framer Motion"],
+        "github": null,
+        "live": null,
+        "status": "Coming Soon",
+        "image": "/images/project-ai-stack.png"
+      },
+      {
+        "title": "Property Business",
+        "description": "Manajemen properti digital untuk pengelolaan aset, listing, dan monitoring bisnis properti.",
+        "tags": ["Digital Business", "Management"],
+        "github": null,
+        "live": null,
+        "status": "Ongoing",
+        "image": "/images/project-property.png"
+      }
+    ]
+  },
+  "contact": {
+    "badge": "Kontak",
+    "titlePrefix": "Mari",
+    "titleHighlight": "Terhubung",
+    "description": "Terbuka untuk diskusi, kolaborasi, maupun peluang baru. Jangan ragu untuk menghubungi saya.",
+    "infoTitle": "Informasi Kontak",
+    "socialTitle": "Sosial Media",
+    "formTitle": "Kirim Pesan",
+    "formName": "Nama",
+    "formNamePlaceholder": "Nama kamu",
+    "formEmail": "Email Kamu",
+    "formEmailPlaceholder": "nama@email.com",
+    "formMessage": "Pesan",
+    "formMessagePlaceholder": "Tulis pesanmu di sini...",
+    "btnSend": "Kirim Pesan",
+    "btnSent": "Terkirim!"
+  },
+  "footer": {
+    "desc": "Mahasiswa yang fokus mendalami bisnis digital, manajemen properti, dan pengembangan web.",
+    "navTitle": "Navigasi",
+    "contactTitle": "Kontak",
+    "madeWith": "Dibuat dengan",
+    "inBali": "di Bali.",
+    "backToTop": "Kembali ke Atas"
+  },
+  "fab": {
+    "scrollTop": "Kembali ke Atas",
+    "closeMenu": "Tutup menu",
+    "quickActions": "Aksi cepat"
+  },
+  "medicalRecord": {
+    "title": "Private Medical Record",
+    "description": "Bagian ini dilindungi enkripsi AES. Masukkan password untuk dekripsi data medis.",
+    "placeholder": "Masukkan Password",
+    "error": "Password salah atau data gagal didekripsi.",
+    "cardTitle": "KARTU REKAM MEDIS",
+    "cardSubtitle": "Laporan Medis Rahasia",
+    "recordId": "Record ID",
+    "patientData": "Data Pasien",
+    "fullName": "Nama Lengkap",
+    "dob": "Tanggal Lahir",
+    "bloodType": "Golongan Darah",
+    "heightWeight": "Tinggi / Berat",
+    "emergencyContact": "Kontak Darurat",
+    "contactFather": "Ayah: ",
+    "contactMother": "Ibu: ",
+    "confirmationPassword": "Kata Sandi Konfirmasi: ",
+    "medicalConditions": "Kondisi Medis & Alergi",
+    "drugAllergies": "Alergi Obat",
+    "foodAllergies": "Alergi Makanan",
+    "comorbid": "Kondisi Penyerta (Comorbid)",
+    "additionalNotes": "Catatan Medis Tambahan",
+    "previousProcedures": "Tindakan Medis Sebelumnya:",
+    "healthInsurance": "Asuransi Kesehatan (BPJS)",
+    "primaryCareDoctor": "Dokter Pribadi / Keluarga",
+    "lastUpdated": "Data terakhir diperbarui:",
+    "confidential": "Rahasia"
+  }
+}

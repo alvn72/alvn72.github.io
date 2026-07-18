@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Highlight } from "./Highlight";
 import { Mail, Phone, MapPin, Send, GitBranch, Star, Link2, HatGlasses } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -26,19 +27,20 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "alvin@email.com",
-    href: "mailto:alvin@email.com",
+    value: "madealvin1333@gmail.com",
+    href: "mailto:madealvin1333@gmail.com",
   },
   {
     icon: Phone,
     label: "WhatsApp",
-    value: "+62 xxx xxxx xxxx",
-    href: "https://wa.me/62xxxxxxxxxx",
+    value: "+62 812 3836 4100",
+    href: "https://wa.me/6281238364100",
   },
-  {icon: HatGlasses,
+  {
+    icon: HatGlasses,
     label: "NGL",
-    value: "",
-    href: "",
+    value: "Click to ask me anything :p",
+    href: "https://ngl.link/alvn.72?",
   },
   {
     icon: MapPin,
@@ -57,16 +59,21 @@ const socials = [
   {
     icon: Star,
     label: "Instagram",
-    href: "https://instagram.com/alvn72",
+    href: "https://instagram.com/alvn.72",
   },
   {
     icon: Link2,
     label: "LinkedIn",
-    href: "https://linkedin.com/in/alvn72",
-  },
+    href: "#", // Tetap beri href agar tag <a> tidak rusak
+    onClick: (e) => {
+      e.preventDefault(); // Mencegah halaman reload atau lompat ke atas
+      alert("LinkedIn profile coming soon");
+    },
+  }
 ];
 
 export const ContactSection = () => {
+  const { t } = useLanguage();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
 
@@ -78,7 +85,7 @@ export const ContactSection = () => {
     if (!form.name || !form.email || !form.message) return;
     const subject = `Pesan dari ${form.name}`;
     const body = `Nama: ${form.name}%0AEmail: ${form.email}%0A%0A${form.message}`;
-    window.open(`mailto:alvin@email.com?subject=${subject}&body=${body}`);
+    window.open(`mailto:madealvin1333@gmail.com?subject=${subject}&body=${body}`);
     setSent(true);
     setTimeout(() => setSent(false), 3000);
   };
@@ -102,22 +109,21 @@ export const ContactSection = () => {
         {/* Header */}
         <motion.div variants={itemVariants} className="flex flex-col gap-2">
           <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-zinc-100 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 shadow-sm flex items-center gap-2 w-max">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#c5a059] dark:bg-[#d4af37]"></span>
             </span>
-            Kontak
+            {t.contact.badge}
           </span>
 
           <h2 className="text-3xl lg:text-5xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 leading-[1.1]">
-            Mari {""}
+            {t.contact.titlePrefix} {""}
             <Highlight delay={300} duration={1500}>
-            &nbsp;Terhubung&nbsp;
+            &nbsp;{t.contact.titleHighlight}&nbsp;
             </Highlight>
           </h2>
 
           <p className="text-sm text-zinc-700 dark:text-zinc-300 max-w-xl leading-relaxed">
-            Terbuka untuk diskusi, kolaborasi, maupun peluang baru. Jangan ragu untuk menghubungi saya.
+            {t.contact.description}
           </p>
         </motion.div>
 
@@ -130,7 +136,7 @@ export const ContactSection = () => {
             {/* Info kontak */}
             <div className="flex flex-col gap-3">
               <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
-                Informasi Kontak
+                {t.contact.infoTitle}
               </h3>
               <ul className="flex flex-col gap-2">
                 {contactInfo.map(({ icon: Icon, label, value, href }) => (
@@ -165,22 +171,24 @@ export const ContactSection = () => {
             {/* Sosial media */}
             <div className="flex flex-col gap-3">
               <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
-                Sosial Media
+                {t.contact.socialTitle}
               </h3>
-              <div className="flex gap-2">
-                {socials.map(({ icon: Icon, label, href }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/50 text-zinc-500 dark:text-zinc-400 text-xs font-medium hover:border-zinc-400 dark:hover:border-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-                  >
-                    <Icon size={16} />
-                    {label}
-                  </a>
-                ))}
-              </div>
+             <div className="flex gap-2">
+  {/* Tambahkan onClick di dalam destrukturisasi di bawah ini */}
+  {socials.map(({ icon: Icon, label, href, onClick }) => (
+    <a
+      key={label}
+      href={href}
+      onClick={onClick} // Pasang onClick di sini
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-2 px-4 py-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/50 text-zinc-500 dark:text-zinc-400 text-xs font-medium hover:border-zinc-400 dark:hover:border-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+    >
+      <Icon size={16} />
+      {label}
+    </a>
+  ))}
+</div>
             </div>
 
           </motion.div>
@@ -188,7 +196,7 @@ export const ContactSection = () => {
           {/* KOLOM KANAN — Form */}
           <motion.div variants={itemVariants} className="flex flex-col gap-3">
             <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
-              Kirim Pesan
+              {t.contact.formTitle}
             </h3>
 
             <div className="flex flex-col gap-3 p-6 rounded-2xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/50">
@@ -196,24 +204,24 @@ export const ContactSection = () => {
               {/* Nama & Email — 2 kolom */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs text-zinc-500 dark:text-zinc-400">Nama</label>
+                  <label className="text-xs text-zinc-500 dark:text-zinc-400">{t.contact.formName}</label>
                   <input
                     type="text"
                     name="name"
                     value={form.name}
                     onChange={handleChange}
-                    placeholder="Nama kamu"
+                    placeholder={t.contact.formNamePlaceholder}
                     className="px-4 py-3 rounded-xl bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-500 transition-colors"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs text-zinc-500 dark:text-zinc-400">Email</label>
+                  <label className="text-xs text-zinc-500 dark:text-zinc-400">{t.contact.formEmail}</label>
                   <input
                     type="email"
                     name="email"
                     value={form.email}
                     onChange={handleChange}
-                    placeholder="email@kamu.com"
+                    placeholder={t.contact.formEmailPlaceholder}
                     className="px-4 py-3 rounded-xl bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-500 transition-colors"
                   />
                 </div>
@@ -221,12 +229,12 @@ export const ContactSection = () => {
 
               {/* Pesan */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs text-zinc-500 dark:text-zinc-400">Pesan</label>
+                <label className="text-xs text-zinc-500 dark:text-zinc-400">{t.contact.formMessage}</label>
                 <textarea
                   name="message"
                   value={form.message}
                   onChange={handleChange}
-                  placeholder="Tulis pesanmu di sini..."
+                  placeholder={t.contact.formMessagePlaceholder}
                   rows={5}
                   className="px-4 py-3 rounded-xl bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-500 transition-colors resize-none"
                 />
@@ -237,7 +245,7 @@ export const ContactSection = () => {
                 onClick={handleSubmit}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 text-sm font-medium hover:scale-105 transition-transform duration-300 shadow-md w-max"
               >
-                {sent ? "Terkirim!" : "Kirim Pesan"}
+                {sent ? t.contact.btnSent : t.contact.btnSend}
                 <Send size={14} />
               </button>
 

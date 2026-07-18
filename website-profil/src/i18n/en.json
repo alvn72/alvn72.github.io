@@ -1,0 +1,195 @@
+{
+  "hero": {
+    "badge": "Excited For New Opportunities",
+    "quoteLine1": "“May We All",
+    "quoteHighlight": "Be a Blessing",
+    "quoteLine2": "”.",
+    "description": "Hello, I'm Alvin 👋. I'm a student focusing on digital business and property management. Additionally, I actively follow IT trends, such as Artificial Intelligence (AI), web development, and digital marketing.",
+    "btnTalk": "Let's Talk",
+    "btnTrack": "Track Record",
+    "btnMedical": "Private Medical Record",
+    "medicalTooltip": "This is my medical record. In case of emergency, find the password and contact my closest relatives."
+  },
+  "about": {
+    "badge": "About Me",
+    "titlePrefix": "Who is",
+    "titleHighlight": "Alvin?",
+    "descriptionPart1": "Alvin Nugraha",
+    "descriptionPart2": " or often called ",
+    "descriptionPart3": "alvn72",
+    "descriptionPart4": " is an ITB STIKOM BALI Digital Business student who has a formal software engineering education background from SMK WIRA HARAPAN.",
+    "btnTouch": "Get in Touch",
+    "btnProjects": "See My Creations",
+    "skillsTitle": "Skills & Expertise",
+    "skills": [
+      { "label": "Digital Business", "iconKey": "Cpu" },
+      { "label": "Property Management & Owner", "iconKey": "Cpu" }
+    ],
+    "expTitle": "Professional Experience",
+    "experiences": [
+      {
+        "title": "High School Internship",
+        "place": "Teksa Digital",
+        "period": "June - October 2025",
+        "iconKey": "Briefcase"
+      },
+      {
+        "title": "Vice Chair of Jobfair Event",
+        "place": "SMK WIRA HARAPAN",
+        "period": "MAY - 2026",
+        "iconKey": "GraduationCap"
+      },
+      {
+        "title": "Content Creator & Brand Owner",
+        "place": "alvn72",
+        "period": "July 2026 - Present",
+        "iconKey": "GraduationCap"
+      },
+      {
+        "title": "Property Business",
+        "place": "Management & Owner",
+        "period": "February 2026 - Present",
+        "iconKey": "GraduationCap"
+      }
+    ],
+    "photoTitle": "Field Photos",
+    "photos": [
+      {
+        "src": "/DokumPKL-Wira.jpg",
+        "alt": "Field photo 1",
+        "caption": "Internship at Teksa Digital"
+      },
+      {
+        "src": "/sertifikatPKL-Wira.jpg",
+        "alt": "Field photo 2",
+        "caption": "Internship Certificate at Teksa Digital"
+      },
+      {
+        "src": "/sertifikatPublicSpeaking.jpeg",
+        "alt": "Field photo 3",
+        "caption": "Public Speaking Seminar Experience"
+      },
+      {
+        "src": "/KarmelCoffee.jpg",
+        "alt": "Field photo 4",
+        "caption": "Barista Course Experience at Karmel Cafetaria"
+      },
+      {
+        "src": "/P5-Ecocycle.jpg",
+        "alt": "Field photo 5",
+        "caption": "P5-Ecocycle Project Experience"
+      },
+      {
+        "src": "/Jobfair-Wira.jpg",
+        "alt": "Jobfair Officer Name Tag 2025",
+        "caption": "Jobfair Event Equipment Vice Chair Experience"
+      }
+    ]
+  },
+  "project": {
+    "badge": "Projects",
+    "titlePrefix": "What Have",
+    "titleHighlight": "I Built?",
+    "description": "A collection of projects I've worked on, ranging from web apps, tools, to digital business.",
+    "links": {
+      "source": "Source Code",
+      "live": "Live Demo"
+    },
+    "items": [
+      {
+        "title": "Profile Website",
+        "description": "Personal portfolio website with a monochrome glassmorphism design, Framer Motion animations, and dark/light mode features.",
+        "tags": ["Next.js", "Tailwind CSS", "Framer Motion"],
+        "github": "https://github.com/alvn72/alvn72.github.io",
+        "live": "https://alvn72.github.io",
+        "status": "Live",
+        "image": "/images/project-portfolio.png"
+      },
+      {
+        "title": "Alvin's Report App",
+        "description": "Web-based complaint application with report management features, user authentication, and an admin dashboard.",
+        "tags": ["Next.js", "Strapi", "SQLite"],
+        "github": "https://github.com/alvn72/UKKPengaduanAlvin",
+        "live": "https://ukkreal.vercel.app/",
+        "status": "Live",
+        "image": "/images/project-pengaduan.png"
+      },
+      {
+        "title": "Marga Pakerti Website",
+        "description": "Website for non-profit organization",
+        "tags": ["Next.js", "Tailwind CSS", "Framer Motion"],
+        "github": null,
+        "live": null,
+        "status": "Coming Soon",
+        "image": "/images/project-ai-stack.png"
+      },
+      {
+        "title": "Property Business",
+        "description": "Digital property management for asset handling, listing, and monitoring property business.",
+        "tags": ["Digital Business", "Management"],
+        "github": null,
+        "live": null,
+        "status": "Ongoing",
+        "image": "/images/project-property.png"
+      }
+    ]
+  },
+  "contact": {
+    "badge": "Contact",
+    "titlePrefix": "Let's",
+    "titleHighlight": "Connect",
+    "description": "Open for discussions, collaborations, or new opportunities. Don't hesitate to reach out.",
+    "infoTitle": "Contact Information",
+    "socialTitle": "Social Media",
+    "formTitle": "Send Message",
+    "formName": "Name",
+    "formNamePlaceholder": "Your name",
+    "formEmail": "Your Email",
+    "formEmailPlaceholder": "example@email.com",
+    "formMessage": "Message",
+    "formMessagePlaceholder": "Write your message here...",
+    "btnSend": "Send Message",
+    "btnSent": "Sent!"
+  },
+  "footer": {
+    "desc": "A student focusing on digital business, property management, and web development.",
+    "navTitle": "Navigation",
+    "contactTitle": "Contact",
+    "madeWith": "Made with",
+    "inBali": "in Bali.",
+    "backToTop": "Back to Top"
+  },
+  "fab": {
+    "scrollTop": "Scroll to top",
+    "closeMenu": "Close menu",
+    "quickActions": "Quick actions"
+  },
+  "medicalRecord": {
+    "title": "Private Medical Record",
+    "description": "This section is protected by AES encryption. Enter the password to decrypt the medical data.",
+    "placeholder": "Enter Password",
+    "error": "Incorrect password or failed to decrypt data.",
+    "cardTitle": "MEDICAL RECORD CARD",
+    "cardSubtitle": "Confidential Medical Report",
+    "recordId": "Record ID",
+    "patientData": "Patient Data",
+    "fullName": "Full Name",
+    "dob": "Date of Birth",
+    "bloodType": "Blood Type",
+    "heightWeight": "Height / Weight",
+    "emergencyContact": "Emergency Contact",
+    "contactFather": "Father: ",
+    "contactMother": "Mother: ",
+    "confirmationPassword": "Confirmation Password: ",
+    "medicalConditions": "Medical Conditions & Allergies",
+    "drugAllergies": "Drug Allergies",
+    "foodAllergies": "Food Allergies",
+    "comorbid": "Underlying Conditions (Comorbid)",
+    "additionalNotes": "Additional Medical Notes",
+    "previousProcedures": "Previous Medical Procedures:",
+    "healthInsurance": "Health Insurance (BPJS)",
+    "primaryCareDoctor": "Primary Care Doctor",
+    "lastUpdated": "Last updated:",
+    "confidential": "Confidential"
+  }
+}

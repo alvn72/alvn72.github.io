@@ -38,13 +38,13 @@ export default function TopographicBackground() {
                   fill: none;
                   stroke: currentColor;
                   stroke-width: 1.2;
-                  opacity: 0.07;
+                  opacity: 0.05;
                 }
                 :root .topo-line {
-                  color: #000000;
+                  color: #c5a059;
                 }
                 .dark .topo-line {
-                  color: #ffffff;
+                  color: #d4af37;
                 }
               `}</style>
             </defs>
