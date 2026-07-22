@@ -95,6 +95,7 @@
       "source": "Source Code",
       "live": "Live Demo"
     },
+    "alreadyHereAlert": "well congratulations, you're already here",
     "items": [
       {
         "title": "Profile Website",
@@ -103,7 +104,7 @@
         "github": "https://github.com/alvn72/alvn72.github.io",
         "live": "https://alvn72.github.io",
         "status": "Live",
-        "image": "/images/project-portfolio.png"
+        "image": "/websiteprofile-eng.png"
       },
       {
         "title": "Alvin's Report App",
@@ -112,7 +113,7 @@
         "github": "https://github.com/alvn72/UKKPengaduanAlvin",
         "live": "https://ukkreal.vercel.app/",
         "status": "Live",
-        "image": "/images/project-pengaduan.png"
+        "image": "/pengaduanalvinukk2026.png"
       },
       {
         "title": "Marga Pakerti Website",

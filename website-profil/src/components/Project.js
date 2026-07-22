@@ -35,7 +35,7 @@ export const ProjectsSection = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-zinc-200/50 dark:bg-zinc-800/20 rounded-full blur-3xl -z-10" />
 
       <motion.div
-        className="w-full flex flex-col gap-10"
+        className="w-full flex flex-col gap-12 lg:gap-16"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -63,16 +63,16 @@ export const ProjectsSection = () => {
           </p>
         </motion.div>
 
-        {/* Single column project cards */}
-        <div className="flex flex-col gap-4">
+        {/* Grid project cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
           {t.project.items.map((project, i) => (
             <motion.div
               key={project.title}
               variants={itemVariants}
-              className="group rounded-2xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/50 hover:border-zinc-400 dark:hover:border-zinc-500 transition-all duration-300 overflow-hidden hover:shadow-lg dark:hover:shadow-zinc-900/50 flex flex-col md:flex-row"
+              className="group rounded-2xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/50 hover:border-zinc-400 dark:hover:border-zinc-500 transition-all duration-300 overflow-hidden hover:shadow-lg dark:hover:shadow-zinc-900/50 flex flex-col h-full"
             >
               {/* Project Image */}
-              <div className="relative w-full md:w-[280px] lg:w-[340px] shrink-0 aspect-[16/10] md:aspect-auto overflow-hidden bg-zinc-100 dark:bg-zinc-900/50">
+              <div className="relative w-full shrink-0 aspect-[16/10] overflow-hidden bg-zinc-100 dark:bg-zinc-900/50">
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -80,7 +80,7 @@ export const ProjectsSection = () => {
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-zinc-50/60 dark:from-zinc-800/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-50/60 dark:from-zinc-800/60 via-transparent to-transparent" />
                 
                 {/* Status badge on image */}
                 <div className="absolute top-3 right-3">
@@ -97,9 +97,9 @@ export const ProjectsSection = () => {
               </div>
 
               {/* Content area */}
-              <div className="p-5 md:p-6 flex flex-col gap-3 flex-1 min-w-0">
+              <div className="p-6 lg:p-8 flex flex-col gap-4 flex-1 min-w-0">
                 {/* Title & description */}
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-2.5">
                     <div className="p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-700/50">
                       <Folder size={16} className="text-zinc-500 dark:text-zinc-400" />
@@ -114,11 +114,11 @@ export const ProjectsSection = () => {
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-700/50 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700"
+                      className="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md bg-zinc-100 dark:bg-zinc-700/50 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700"
                     >
                       <Code2 size={10} />
                       {tag}
@@ -128,7 +128,7 @@ export const ProjectsSection = () => {
 
                 {/* Links */}
                 {(project.github || project.live) && (
-                  <div className="flex flex-wrap items-center gap-2.5 pt-3 border-t border-zinc-200 dark:border-zinc-700/50 mt-auto">
+                  <div className="flex flex-wrap items-center gap-3 pt-5 mt-auto border-t border-zinc-200 dark:border-zinc-700/50">
                     {project.github && (
                       <a href={project.github}
                         target="_blank"
@@ -140,9 +140,14 @@ export const ProjectsSection = () => {
                       </a>
                     )}
                     {project.live && (
-                      <a href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        onClick={() => {
+                          if (project.live === "https://alvn72.github.io") {
+                            alert(t.project.alreadyHereAlert);
+                          } else {
+                            window.open(project.live, "_blank", "noopener,noreferrer");
+                          }
+                        }}
                         className="group/btn relative inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-lg text-white overflow-hidden transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] shadow-md hover:shadow-lg"
                       >
                         {/* Animated gradient background */}
@@ -159,7 +164,7 @@ export const ProjectsSection = () => {
                           {t.project.links.live}
                           <ArrowUpRight size={12} className="transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
                         </span>
-                      </a>
+                      </button>
                     )}
                   </div>
                 )}

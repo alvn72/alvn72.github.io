@@ -7,6 +7,7 @@ import { MedicalRecord } from "@/components/MedicalRecord";
 import { AboutSection } from "@/components/About";
 import { useEffect } from "react";
 import { ContactSection } from "@/components/Contact";
+import { StoryTimeline } from "@/components/StoryTimeline";
 import { ProjectsSection } from "@/components/Project";
 import { Footer } from "@/components/Footer";
 import { FloatingActionButton } from "@/components/FloatingActionBtn";
@@ -24,6 +25,7 @@ export default function Home() {
         <HeroSection />
         <AboutSection /> 
         <ProjectsSection/>
+        <StoryTimeline />
         <ContactSection />
       </main>
       <Footer />

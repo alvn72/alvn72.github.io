@@ -92,9 +92,10 @@
     "titleHighlight": "Sudah Dibuat?",
     "description": "Kumpulan project yang pernah dikerjakan, mulai dari web app, tools, hingga bisnis digital.",
     "links": {
-      "source": "Source Code",
-      "live": "Live Demo"
+      "source": "Kode Sumber",
+      "live": "Demo Langsung"
     },
+    "alreadyHereAlert": "selamat, anda sudah disini",
     "items": [
       {
         "title": "Website Profil",
@@ -103,7 +104,7 @@
         "github": "https://github.com/alvn72/alvn72.github.io",
         "live": "https://alvn72.github.io",
         "status": "Live",
-        "image": "/images/project-portfolio.png"
+        "image": "/websiteprofile-id.png"
       },
       {
         "title": "Pengaduan Alvin",
@@ -112,7 +113,7 @@
         "github": "https://github.com/alvn72/UKKPengaduanAlvin",
         "live": "https://ukkreal.vercel.app/",
         "status": "Live",
-        "image": "/images/project-pengaduan.png"
+        "image": "/pengaduanalvinukk2026.png"
       },
       {
         "title": "Marga Pakerti Website",

@@ -33,21 +33,21 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-8 md:px-16 lg:px-24 pt-20 overflow-hidden w-full max-w-[1440px] mx-auto">
+    <section className="relative min-h-screen flex items-center justify-center px-5 sm:px-8 md:px-16 lg:px-24 pt-24 pb-16 lg:py-16 overflow-hidden w-full max-w-[1440px] mx-auto">
       {/* Background decoration */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-zinc-200/50 dark:bg-zinc-800/20 rounded-full blur-3xl -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-zinc-200/50 dark:bg-zinc-800/20 rounded-full blur-3xl -z-10" />
 
-      <div className="flex flex-col-reverse lg:flex-row items-center justify-between w-full gap-16 lg:gap-12">
+      <div className="flex flex-col-reverse lg:flex-row items-center justify-between w-full gap-10 sm:gap-16 lg:gap-12">
         
         {/* KIRI: Teks & CTA */}
         <motion.div
-          className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left z-10"
+          className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left z-10 w-full"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <motion.div variants={itemVariants} className="hidden md:block mb-6">
-            <span className="px-5 py-2 rounded-full text-xs uppercase tracking-[0.2em] font-semibold bg-transparent text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800/60 flex items-center gap-3 w-max">
+          <motion.div variants={itemVariants} className="mb-4 sm:mb-6">
+            <span className="px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold bg-transparent text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800/60 flex items-center gap-2.5 sm:gap-3 w-max">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#c5a059] dark:bg-[#d4af37]"></span>
               </span>
@@ -57,11 +57,11 @@ export default function HeroSection() {
 
           <motion.h1
             variants={itemVariants}
-            className="text-center lg:text-left text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 mb-6 leading-[1.05] font-heading"
+            className="text-center lg:text-left text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 mb-6 leading-[1.1] font-heading w-full"
           >
-            <span className="block whitespace-nowrap">{t.hero.quoteLine1}</span>
-            <span className="block lg:mt-4">
-              <span className="whitespace-nowrap">
+            <span className="block sm:whitespace-nowrap">{t.hero.quoteLine1}</span>
+            <span className="block mt-2 sm:mt-4">
+              <span className="sm:whitespace-nowrap">
                 <Highlight delay={300} duration={2500}>
                   &nbsp;{t.hero.quoteHighlight}&nbsp;
                 </Highlight>
@@ -72,23 +72,23 @@ export default function HeroSection() {
 
           <motion.p
             variants={itemVariants}
-            className="text-lg text-zinc-600 dark:text-zinc-400 mb-10 max-w-xl leading-relaxed"
+            className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 mb-8 sm:mb-10 max-w-xl leading-relaxed px-2 sm:px-0"
           >
             {t.hero.description}
           </motion.p>
 
           <motion.div
             variants={itemVariants}
-            className="flex flex-col gap-4 w-full sm:w-auto"
+            className="flex flex-col gap-4 w-full sm:w-auto items-center lg:items-start"
           >
             {/* Main Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 items-center w-full">
+            <div className="flex flex-col sm:flex-row gap-3.5 sm:gap-4 items-center w-full sm:w-auto">
               <button onClick={() => {
                 document.getElementById('contact')?.scrollIntoView({
                   behavior: 'smooth',
                   block: 'start',
                 })
-              }} className="w-[85%] sm:w-auto flex justify-center items-center gap-3 px-8 py-3.5 rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors duration-500">
+              }} className="w-full sm:w-auto flex justify-center items-center gap-3 px-7 sm:px-8 py-3.5 rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors duration-500 text-sm sm:text-base">
                 {t.hero.btnTalk}
                 <ArrowRight size={18} />
               </button>
@@ -100,16 +100,16 @@ export default function HeroSection() {
                   block: 'start',
                 })
               }}
-              className="w-[85%] sm:w-auto flex justify-center items-center gap-3 px-8 py-3.5 rounded-full glass dark:glass-dark font-medium transition-colors duration-500 group hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+              className="w-full sm:w-auto flex justify-center items-center gap-3 px-7 sm:px-8 py-3.5 rounded-full glass dark:glass-dark font-medium transition-colors duration-500 group hover:bg-zinc-50 dark:hover:bg-zinc-800/50 text-sm sm:text-base">
                 <Sparkles size={16} className="text-[#c5a059] dark:text-[#d4af37] opacity-80" />
                 {t.hero.btnTrack}
               </button>
             </div>
 
             {/* Medical Record Button (Subtle but professional) */}
-            <div className="mt-2 flex justify-center lg:justify-start">
+            <div className="mt-1 sm:mt-2 flex justify-center lg:justify-start w-full sm:w-auto">
              <Tooltip text={t.hero.medicalTooltip} position={{ base: 'top', md: 'right' }} maxWidth={240}>
-              <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors group" onClick={() => {
+              <button className="flex items-center justify-center gap-2 px-4 py-2 text-xs sm:text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors group" onClick={() => {
                 window.dispatchEvent(new Event('openMedicalRecord'))
               }}> 
                 <LockKeyhole size={16} className="group-hover:scale-110 transition-transform" />
@@ -141,7 +141,7 @@ export default function HeroSection() {
             }
           }}
         >
-          <div className="relative group w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] lg:w-[450px] lg:h-[450px]">
+          <div className="relative group w-[250px] h-[250px] sm:w-[350px] sm:h-[350px] lg:w-[450px] lg:h-[450px]">
             {/* Glowing effect behind image */}
             <div className="absolute -inset-1 bg-gradient-to-tr from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-700 rounded-3xl blur-3xl opacity-20 group-hover:opacity-40 transition duration-1000"></div>
             
