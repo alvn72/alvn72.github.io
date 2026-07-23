@@ -83,27 +83,27 @@ export default function HeroSection() {
           >
             {/* Main Buttons */}
             <div className="flex flex-col sm:flex-row gap-3.5 sm:gap-4 items-center w-full sm:w-auto">
-              <button onClick={() => {
-                document.getElementById('contact')?.scrollIntoView({
-                  behavior: 'smooth',
-                  block: 'start',
-                })
-              }} className="w-full sm:w-auto flex justify-center items-center gap-3 px-7 sm:px-8 py-3.5 rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors duration-500 text-sm sm:text-base">
+              <a 
+                href="#contact" 
+                className="w-full sm:w-auto flex justify-center items-center gap-3 px-7 sm:px-8 py-3.5 rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors duration-500 text-sm sm:text-base"
+              >
                 {t.hero.btnTalk}
                 <ArrowRight size={18} />
-              </button>
-
+              </a>
+ 
               <button
-              onClick={() => {
-                document.getElementById('about')?.scrollIntoView({
-                  behavior: 'smooth',
-                  block: 'start',
-                })
-              }}
-              className="w-full sm:w-auto flex justify-center items-center gap-3 px-7 sm:px-8 py-3.5 rounded-full glass dark:glass-dark font-medium transition-colors duration-500 group hover:bg-zinc-50 dark:hover:bg-zinc-800/50 text-sm sm:text-base">
+                onClick={() => {
+                  document.getElementById('about')?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                  })
+                }}
+                className="w-full sm:w-auto flex justify-center items-center gap-3 px-7 sm:px-8 py-3.5 rounded-full glass dark:glass-dark font-medium transition-colors duration-500 group hover:bg-zinc-50 dark:hover:bg-zinc-800/50 text-sm sm:text-base"
+              >
                 <Sparkles size={16} className="text-[#c5a059] dark:text-[#d4af37] opacity-80" />
                 {t.hero.btnTrack}
               </button>
+             
             </div>
 
             {/* Medical Record Button (Subtle but professional) */}

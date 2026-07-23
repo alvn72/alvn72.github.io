@@ -6,34 +6,40 @@ import { motion } from "framer-motion";
 
 const storyData = [
   {
-    year: "2015",
-    title: "The Beginning",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    year: "Awal 2023",
+    title: "Mau Jadi Apa?",
+    description: "dimasa-masa awal smk, aku tidak bermimpi untuk menjadi apapun, aku hanya ingin hidup yang stabil dan membangun keluarga kecil yang harmonis bersama dia.",
     image: "/DokumPKL-Wira.jpg"
   },
   {
-    year: "2018",
-    title: "Exploring Passions",
-    description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    year: "Akhir 2023",
+    title: "Kenyataan",
+    description: "Tapi kenyataan berkata lain, kenyataan bahwa dia adalah orang yang levelnya jauh diatas ku, sehingga mimpi ku sebelumnya mustahil untuk tergapai.", 
     image: "/KarmelCoffee.jpg"
   },
   {
-    year: "2021",
-    title: "Diving into Tech",
-    description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+    year: "Awal 2024",
+    title: "Penolakan",
+    description: "Rasa Kecewa jujur merusak tahun ku ini, aku menjadi pribadi yang bingung dan tak berkembang, pikiran ku bisa dikatakan kacau oleh perasaan ku sendiri.",
     image: "/P5-Ecocycle.jpg"
   },
   {
-    year: "2024",
-    title: "Building Projects",
-    description: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.",
+    year:"Akhir 2024",
+    title:"Titik Terendah",
+    description:"Semenjak itu aku menjadi pribadi yang bisa dikatakan kehilangan semangat, prestasi ku meredup, tidak asik dalam tongkorongan, bahkan dianggap pribadi yang sensitif",
+    image:"/images/project-property.png"
+  },
+  {
+    year: "Tahun 2025",
+    title: "Menerima Keadaan",
+    description: "Lambat Laun aku berpikir, jika aku tidak bisa bersamanya karna levelnya diatas ku, kenapa aku tidak naik level saja. sejak saat itu aku yang awalnya tidak ingin apa-apa menjadi bertekat saat dewasa nanti aku akan menjadi seorang yang penting, seorang yang levelnya jauh diatas rata rata orang dan yang paling penting, seseorang yang bisa menjadi berkat bagi sesamanya.",
     image: "/websiteprofile-eng.png"
   },
   {
-    year: "2026",
-    title: "Looking Forward",
-    description: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
-    image: "/pengaduanalvinukk2026.png"
+    year: "Tahun 2026",
+    title: "The Journey",
+    description: "Pada akhirnya sekarang saya berkuliah di stikom, dengan mimpi, visi, dan misi yang jauh melampaui diri saya yang dulu, salam kenal saya Alvin Nugraha, seorang mahasiswa yang berhasil [pamer prestasi yadayadayada].",
+    image: "/images/project-ai-stack.png"
   }
 ];
 

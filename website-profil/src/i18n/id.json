@@ -17,10 +17,10 @@
     "descriptionPart1": "Alvin Nugraha",
     "descriptionPart2": " atau sering dipanggil ",
     "descriptionPart3": "alvn72",
-    "descriptionPart4": " adalah mahasiswa ITB STIKOM BALI Jurusan Bisnis Digital yang memiliki latar belakang pendidikan formal perangkat lunak di SMK WIRA HARAPAN",
+    "descriptionPart4": " adalah sosok yang percaya pada kekuatan belajar lintas bidang. Dengan fondasi di bidang Web Design, fokus utamanya saat ini tertuju pada Bisnis Digital dan Properti. Rasa ingin tahunya yang tinggi membawa Alvin untuk terus mengeksplorasi AI dan hukum, sembari aktif di dunia modeling dan konsisten menerapkan gaya hidup sehat.",
     "btnTouch": "Hubungi Saya",
     "btnProjects": "Lihat Kreasi Saya",
-    "skillsTitle": "Skills & Expertise",
+    "skillsTitle": "KEAHLIAN",
     "skills": [
       { "label": "Digital Business", "iconKey": "Cpu" },
       { "label": "Property Management & Owner", "iconKey": "Cpu" }
@@ -28,7 +28,7 @@
     "expTitle": "Pengalaman Profesional",
     "experiences": [
       {
-        "title": "High School Internship",
+        "title": "Anak Magang - SMK",
         "place": "Teksa Digital",
         "period": "Juni - Oktober 2025",
         "iconKey": "Briefcase"
@@ -56,33 +56,33 @@
     "photos": [
       {
         "src": "/DokumPKL-Wira.jpg",
-        "alt": "Foto lapangan 1",
+        "alt": "Oktober 2025 - Teksa Digital",
         "caption": "Internship / PKL di Teksa Digital"
       },
       {
         "src": "/sertifikatPKL-Wira.jpg",
-        "alt": "Foto lapangan 2",
+        "alt": "Oktober 2025 - Teksa Digital",
         "caption": "Sertifikat Internship / PKL di Teksa Digital"
       },
       {
         "src": "/sertifikatPublicSpeaking.jpeg",
-        "alt": "Foto lapangan 3",
+        "alt": "November 2025 - GKPB Marga Pakerti",
         "caption": "Pengalaman Seminar Public Speaking"
       },
       {
         "src":"/KarmelCoffee.jpg",
-        "alt": "Foto lapangan 4",
+        "alt": "April 2026 - Karmel Cafetaria",
         "caption": "Pengalaman Kursus Barista Di Karmel Cafetaria"
       },
       {
         "src":"/P5-Ecocycle.jpg",
-        "alt": "Foto lapangan 5",
+        "alt": "September 2024",
         "caption": "Pengalaman Projek P5-Ecocycle"
       },
       {
         "src": "/Jobfair-Wira.jpg",
-        "alt": "Name Tag Petugas JobFair Wira Harapan 2025 ",
-        "caption": "Pengalaman Wakil Ketua Perlengkapan Event Jobfair "
+        "alt": "Mei 2025 | Mei 2026",
+        "caption": "Pengalaman Wakil Ketua Sie Perlengkapan Event Jobfair Wira Harapan"
       }
     ]
   },
@@ -110,7 +110,7 @@
         "title": "Pengaduan Alvin",
         "description": "Aplikasi pengaduan berbasis web dengan fitur manajemen laporan, autentikasi pengguna, dan dashboard admin.",
         "tags": ["Next.js", "Strapi", "SQLite"],
-        "github": "https://github.com/alvn72/UKKPengaduanAlvin",
+        "github": "https://github.com/alvn72/UKKREAL",
         "live": "https://ukkreal.vercel.app/",
         "status": "Live",
         "image": "/pengaduanalvinukk2026.png"
@@ -122,16 +122,7 @@
         "github": null,
         "live": null,
         "status": "Coming Soon",
-        "image": "/images/project-ai-stack.png"
-      },
-      {
-        "title": "Property Business",
-        "description": "Manajemen properti digital untuk pengelolaan aset, listing, dan monitoring bisnis properti.",
-        "tags": ["Digital Business", "Management"],
-        "github": null,
-        "live": null,
-        "status": "Ongoing",
-        "image": "/images/project-property.png"
+        "image": ""
       }
     ]
   },
