@@ -9,8 +9,8 @@ import {
   Briefcase,
   GraduationCap,
 } from "lucide-react";
-import { Carousel } from "./Carousel";
-import { Highlight } from "./Highlight";
+import { Carousel } from "../../components/Carousel";
+import { Highlight } from "../../components/Highlight";
 import { Sparkles } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 

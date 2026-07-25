@@ -3,8 +3,8 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, LockKeyhole } from "lucide-react";
 import Image from "next/image";
-import { Highlight } from "./Highlight";
-import { Tooltip } from './Tooltip';
+import { Highlight } from "../../components/Highlight";
+import { Tooltip } from '../../components/Tooltip';
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function HeroSection() {

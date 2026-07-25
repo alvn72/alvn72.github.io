@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Highlight } from "./Highlight";
+import { Highlight } from "../../components/Highlight";
 import { Mail, Phone, MapPin, Send, GitBranch, Star, Link2, HatGlasses } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 

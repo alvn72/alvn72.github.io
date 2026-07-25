@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LockKeyhole, X, ArrowRight, Activity, FileText, AlertCircle, Phone, Globe, Shield, Stethoscope } from "lucide-react";
 import CryptoJS from "crypto-js";
-import { ENCRYPTED_MEDICAL_DATA } from "../data/medical-data.encrypted";
+import { ENCRYPTED_MEDICAL_DATA } from "../../data/medical-data.encrypted";
 import { useLanguage } from "@/context/LanguageContext";
 
 export function MedicalRecord() {

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Code2, ExternalLink, GitBranch, Folder, ArrowUpRight, Sparkles } from "lucide-react";
-import { Highlight } from "./Highlight";
+import { Highlight } from "../../components/Highlight";
 import { useLanguage } from "@/context/LanguageContext";
 import Image from "next/image";
 

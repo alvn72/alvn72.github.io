@@ -1,15 +1,15 @@
 'use client'
 
-import HeroSection from "@/components/HeroSection";
+import HeroSection from "@/app/heroSec/page";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
-import { MedicalRecord } from "@/components/MedicalRecord";
-import { AboutSection } from "@/components/About";
+import { MedicalRecord } from "@/app/med-rec/page";
+import { AboutSection } from "@/app/about/page";
 import { useEffect } from "react";
-import { ContactSection } from "@/components/Contact";
-import { StoryTimeline } from "@/components/StoryTimeline";
-import { ProjectsSection } from "@/components/Project";
-import { Footer } from "@/components/Footer";
+import { ContactSection } from "@/app/contact/page";
+import { StoryTimeline } from "@/app/story/page";
+import { ProjectsSection } from "@/app/projects/page";
+import { Footer } from "@/app/footer/page";
 import { FloatingActionButton } from "@/components/FloatingActionBtn";
 
 export default function Home() {
