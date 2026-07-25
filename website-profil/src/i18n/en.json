@@ -56,32 +56,32 @@
     "photos": [
       {
         "src": "/DokumPKL-Wira.jpg",
-        "alt": "Field photo 1",
+        "alt": "October 2025 - Teksa Digital",
         "caption": "Internship at Teksa Digital"
       },
       {
         "src": "/sertifikatPKL-Wira.jpg",
-        "alt": "Field photo 2",
+        "alt": "Internship Certificate",
         "caption": "Internship Certificate at Teksa Digital"
       },
       {
         "src": "/sertifikatPublicSpeaking.jpeg",
-        "alt": "Field photo 3",
+        "alt": "November 2025 - GKPB Marga Pakerti",
         "caption": "Public Speaking Seminar Experience"
       },
       {
         "src": "/KarmelCoffee.jpg",
-        "alt": "Field photo 4",
+        "alt": "April 2026 - Karmel Cafetaria",
         "caption": "Barista Course Experience at Karmel Cafetaria"
       },
       {
         "src": "/P5-Ecocycle.jpg",
-        "alt": "Field photo 5",
+        "alt": "September 2024",
         "caption": "P5-Ecocycle Project Experience"
       },
       {
         "src": "/Jobfair-Wira.jpg",
-        "alt": "Jobfair Officer Name Tag 2025",
+        "alt": " May 2025 | May 2026",
         "caption": "Jobfair Event Equipment Vice Chair Experience"
       }
     ]
@@ -123,15 +123,6 @@
         "live": null,
         "status": "Coming Soon",
         "image": "/images/project-ai-stack.png"
-      },
-      {
-        "title": "Property Business",
-        "description": "Digital property management for asset handling, listing, and monitoring property business.",
-        "tags": ["Digital Business", "Management"],
-        "github": null,
-        "live": null,
-        "status": "Ongoing",
-        "image": "/images/project-property.png"
       }
     ]
   },
@@ -192,5 +183,42 @@
     "primaryCareDoctor": "Primary Care Doctor",
     "lastUpdated": "Last updated:",
     "confidential": "Confidential"
+  },
+  "story": {
+    "badge": "✦ Time Travel",
+    "titlePrefix": "My",
+    "titleHighlight": "Story",
+    "items": [
+      {
+        "year": "Early 2023",
+        "title": "What Do I Want to Be?",
+        "description": "In the early days of vocational high school, I didn't dream of becoming anything. I just wanted a stable life and to build a small, harmonious family.",
+        "image": "/DokumPKL-Wira.jpg"
+      },
+      {
+        "year": "Early 2024",
+        "title": "The Illusion of Comfort",
+        "description": "Because my goals were fairly simple back then, I became a very laid-back person. I went to school just for the sake of it, finished assignments just to get them done.",
+        "image": "/P5-Ecocycle.jpg"
+      },
+      {
+        "year": "Year 2025",
+        "title": "The Awakening",
+        "description": "Until it crossed my mind — my youth only comes once, it will never come again. Why am I taking it easy? Am I wasting my youth?",
+        "image": "/"
+      },
+      {
+        "year": "Year 2026",
+        "title": "A New Purpose",
+        "description": "From that moment on, I — who initially wanted nothing — became determined that when I grow up, I will become someone important, someone whose level is far above the average person, and most importantly, someone who can be a blessing to others.",
+        "image": "/"
+      },
+      {
+        "year": "Year 2026",
+        "title": "The Beginning of a Story",
+        "description": "In the end, I am now studying at STIKOM, with dreams, vision, and missions that far surpass who I used to be. Nice to meet you, I'm Alvin Nugraha, a university student who has [flex achievements yadayadayada].",
+        "image": "/images/project-ai-stack.png"
+      }
+    ]
   }
 }

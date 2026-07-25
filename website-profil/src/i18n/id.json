@@ -122,7 +122,7 @@
         "github": null,
         "live": null,
         "status": "Coming Soon",
-        "image": ""
+        "image": "/images/project-property.png"
       }
     ]
   },
@@ -183,5 +183,42 @@
     "primaryCareDoctor": "Dokter Pribadi / Keluarga",
     "lastUpdated": "Data terakhir diperbarui:",
     "confidential": "Rahasia"
+  },
+  "story": {
+    "badge": "✦ Perjalanan Waktu",
+    "titlePrefix": "My",
+    "titleHighlight": "Story",
+    "items": [
+      {
+        "year": "Awal 2023",
+        "title": "Mau Jadi Apa?",
+        "description": "dimasa-masa awal smk, aku tidak bermimpi untuk menjadi apapun. aku hanya ingin hidup yang stabil dan membangun keluarga kecil yang harmonis.",
+        "image": "/DokumPKL-Wira.jpg"
+      },
+      {
+        "year": "Awal 2024",
+        "title": "Ilusi Kenyamanan",
+        "description": "Karna tujuan ku yang tergolong sederhana diwaktu itu, aku menjadi pribadi yang sangat santai. sekolah asal sekolah, tugas asal selesai.",
+        "image": "/P5-Ecocycle.jpg"
+      },
+      {
+        "year": "Tahun 2025",
+        "title": "Kesadaran",
+        "description": "sampai terbesit dipikiran ku, masa muda ku cuma sekali, tidak akan terulang lagi. kenapa aku bersantai? apakah aku menyia-nyiakan masa mudaku?.",
+        "image": "/"
+      },
+      {
+        "year": "Tahun 2026",
+        "title": "Tujuan Baru",
+        "description": "Sejak saat itu aku yang awalnya tidak ingin apa-apa menjadi bertekat saat dewasa nanti aku akan menjadi seorang yang penting, seorang yang levelnya jauh diatas rata rata orang dan yang paling penting, seseorang yang bisa menjadi berkat bagi sesamanya.",
+        "image": "/"
+      },
+      {
+        "year": "Tahun 2026",
+        "title": "Awal Sebuah Kisah",
+        "description": "Pada akhirnya sekarang aku berkuliah di stikom, dengan mimpi, visi, dan misi yang jauh melampaui diri aku yang dulu, salam kenal aku Alvin Nugraha, seorang mahasiswa yang berhasil [pamer prestasi yadayadayada].",
+        "image": "/images/project-ai-stack.png"
+      }
+    ]
   }
 }

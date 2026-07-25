@@ -24,7 +24,7 @@ const itemVariants = {
 };
 
 export const ProjectsSection = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   return (
     <section
@@ -35,6 +35,7 @@ export const ProjectsSection = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-zinc-200/50 dark:bg-zinc-800/20 rounded-full blur-3xl -z-10" />
 
       <motion.div
+        key={lang}
         className="w-full flex flex-col gap-12 lg:gap-16"
         variants={containerVariants}
         initial="hidden"
@@ -175,14 +176,6 @@ export const ProjectsSection = () => {
         </div>
 
       </motion.div>
-
-      {/* Shimmer animation keyframes */}
-      <style jsx global>{`
-        @keyframes shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-      `}</style>
     </section>
   );
 };

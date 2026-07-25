@@ -3,47 +3,11 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-
-const storyData = [
-  {
-    year: "Awal 2023",
-    title: "Mau Jadi Apa?",
-    description: "dimasa-masa awal smk, aku tidak bermimpi untuk menjadi apapun, aku hanya ingin hidup yang stabil dan membangun keluarga kecil yang harmonis bersama dia.",
-    image: "/DokumPKL-Wira.jpg"
-  },
-  {
-    year: "Akhir 2023",
-    title: "Kenyataan",
-    description: "Tapi kenyataan berkata lain, kenyataan bahwa dia adalah orang yang levelnya jauh diatas ku, sehingga mimpi ku sebelumnya mustahil untuk tergapai.", 
-    image: "/KarmelCoffee.jpg"
-  },
-  {
-    year: "Awal 2024",
-    title: "Penolakan",
-    description: "Rasa Kecewa jujur merusak tahun ku ini, aku menjadi pribadi yang bingung dan tak berkembang, pikiran ku bisa dikatakan kacau oleh perasaan ku sendiri.",
-    image: "/P5-Ecocycle.jpg"
-  },
-  {
-    year:"Akhir 2024",
-    title:"Titik Terendah",
-    description:"Semenjak itu aku menjadi pribadi yang bisa dikatakan kehilangan semangat, prestasi ku meredup, tidak asik dalam tongkorongan, bahkan dianggap pribadi yang sensitif",
-    image:"/images/project-property.png"
-  },
-  {
-    year: "Tahun 2025",
-    title: "Menerima Keadaan",
-    description: "Lambat Laun aku berpikir, jika aku tidak bisa bersamanya karna levelnya diatas ku, kenapa aku tidak naik level saja. sejak saat itu aku yang awalnya tidak ingin apa-apa menjadi bertekat saat dewasa nanti aku akan menjadi seorang yang penting, seorang yang levelnya jauh diatas rata rata orang dan yang paling penting, seseorang yang bisa menjadi berkat bagi sesamanya.",
-    image: "/websiteprofile-eng.png"
-  },
-  {
-    year: "Tahun 2026",
-    title: "The Journey",
-    description: "Pada akhirnya sekarang saya berkuliah di stikom, dengan mimpi, visi, dan misi yang jauh melampaui diri saya yang dulu, salam kenal saya Alvin Nugraha, seorang mahasiswa yang berhasil [pamer prestasi yadayadayada].",
-    image: "/images/project-ai-stack.png"
-  }
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export const StoryTimeline = () => {
+  const { t } = useLanguage();
+  const storyData = t.story?.items || [];
   const [activeStep, setActiveStep] = useState(0);
   const stepRefs = useRef([]);
 
@@ -80,10 +44,10 @@ export const StoryTimeline = () => {
           className="flex flex-col items-center"
         >
           <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-zinc-100 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 mb-6">
-            ✦ Time Travel
+            {t.story?.badge}
           </span>
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 mb-4">
-            My <span className="text-[#c5a059] dark:text-[#d4af37]">Story</span>
+            {t.story?.titlePrefix} <span className="text-[#c5a059] dark:text-[#d4af37]">{t.story?.titleHighlight}</span>
           </h2>
         </motion.div>
       </div>
