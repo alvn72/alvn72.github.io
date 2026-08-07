@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="1; url=https://medical-alvn72.alvn72.my.id" />
+    <title>Redirecting...</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0f172a; /* Slate 900 */
+            color: #f8fafc; /* Slate 50 */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            text-align: center;
+        }
+
+        .loader-container {
+            width: 320px;
+            max-width: 80%;
+        }
+
+        .loading-text {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.025em;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: #1e293b; /* Slate 800 */
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-value {
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899); /* Blue to Purple to Pink gradient */
+            border-radius: 9999px;
+            animation: load 1.5s infinite ease-in-out alternate;
+        }
+
+        .fallback-text {
+            margin-top: 2rem;
+            font-size: 0.875rem;
+            color: #94a3b8; /* Slate 400 */
+        }
+
+        .fallback-text a {
+            color: #60a5fa; /* Blue 400 */
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .fallback-text a:hover {
+            color: #93c5fd; /* Blue 300 */
+            text-decoration: underline;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        @keyframes load {
+            0% {
+                width: 10%;
+                transform: translateX(-100%);
+            }
+            100% {
+                width: 50%;
+                transform: translateX(250%);
+            }
+        }
+    </style>
+    <script type="text/javascript">
+        // Small delay so the loading animation can be seen
+        setTimeout(function() {
+            window.location.href = "https://medical-alvn72.alvn72.my.id";
+        }, 1000);
+    </script>
+</head>
+<body>
+    <div class="loader-container">
+        <div class="loading-text">Redirecting to Medical Site...</div>
+        <div class="progress-bar">
+            <div class="progress-value"></div>
+        </div>
+    </div>
+    
+    <div class="fallback-text">
+        If you are not redirected automatically, follow this <a href="https://medical-alvn72.alvn72.my.id">link</a>.
+    </div>
+</body>
+</html>
