@@ -23,14 +23,14 @@ export default function HeroSection({ onShopNowClick, onInfoClick }) {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[55vh] sm:min-h-[65vh] flex items-center justify-center overflow-hidden border-b border-[#2a2a2a] bg-[#0a0a0a]">
+    <section className="relative w-full min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center overflow-hidden border-b border-[#2a2a2a] bg-[#0a0a0a]">
 
       {/* Layer Background Video */}
-      <div className="absolute inset-0 z-0 overflow-hidden flex items-center justify-center">
+      <div className="absolute inset-0 z-0 overflow-hidden">
         {/* Background gradient fallback */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#1a1a1a]" />
 
-        {/* Video Background (Di-scale down ~80% agar tampak lebih jauh/tidak terlalu zoom) */}
+        {/* Video Background */}
         <video
           ref={videoRef}
           src={videoSrc}
@@ -39,11 +39,11 @@ export default function HeroSection({ onShopNowClick, onInfoClick }) {
           muted
           playsInline
           preload="auto"
-          className="w-full h-full object-contain sm:object-cover scale-90 sm:scale-80 transform transition-transform duration-500 opacity-80"
+          className="absolute inset-0 w-full h-full object-cover"
         />
 
         {/* Overlay gelap agar teks di atas video tetap terbaca jelas */}
-        <div className="absolute inset-0 bg-black/50 pointer-events-none" />
+        <div className="absolute inset-0 bg-black/60 pointer-events-none" />
       </div>
 
       {/* Layer Konten Teks */}
