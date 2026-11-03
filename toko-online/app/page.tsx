@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import ShopPage from './src/shopPage';
-import InfoPage from './src/infoPage';
+
+// Lazy loading InfoPage agar hanya dimuat saat user membuka tab Info
+const InfoPage = lazy(() => import('./src/infoPage'));
 
 export interface CartItem {
   id: number;
@@ -16,8 +18,14 @@ export interface CartItem {
   quantity: number;
 }
 
-// Nomor WhatsApp tujuan penerima pesanan (Ganti sesuai nomor WA Anda, awali kode negara misal 62)
+// Nomor WhatsApp tujuan penerima pesanan (Awali kode negara 62)
 const DEFAULT_WA_NUMBER = '6281238364100';
+
+// Fungsi sanitasi teks untuk keamanan pesan WhatsApp
+function sanitizeText(str: string): string {
+  if (typeof str !== 'string') return '';
+  return str.replace(/[\r\n\t]/g, ' ').replace(/\s+/g, ' ').trim();
+}
 
 export default function Home() {
   // Website dibuka langsung masuk ke shopPage secara default
@@ -114,7 +122,7 @@ export default function Home() {
     setIsCheckoutModalOpen(true);
   };
 
-  // Ubah kuantitas di dalam modal checkout (khusus checkout langsung atau penyesuaian)
+  // Ubah kuantitas di dalam modal checkout
   const handleUpdateCheckoutQuantity = (productId: number, delta: number) => {
     setCheckoutItems((prev) =>
       prev
@@ -133,7 +141,12 @@ export default function Home() {
   const handleSendToWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!buyerName.trim()) {
+    const cleanName = sanitizeText(buyerName);
+    const cleanPhone = sanitizeText(buyerPhone);
+    const cleanAddress = sanitizeText(buyerAddress);
+    const cleanNotes = sanitizeText(buyerNotes);
+
+    if (!cleanName) {
       alert('Mohon masukkan nama pemesan.');
       return;
     }
@@ -158,29 +171,29 @@ export default function Home() {
       )
       .join('\n');
 
-    // Susun pesan WhatsApp (langsung berakhir di catatan tanpa kalimat halo admin)
+    // Pesanan langsung berakhir di catatan tanpa kata halo admin
     const message = `*PESANAN BARU - TOKO ONLINE*
 ----------------------------------------
-*Nama Pemesan:* ${buyerName.trim()}
-*Nomor WhatsApp/HP:* ${buyerPhone.trim() || '-'}
-*Alamat Pengiriman:* ${buyerAddress.trim() || '-'}
+*Nama Pemesan:* ${cleanName}
+*Nomor WhatsApp/HP:* ${cleanPhone || '-'}
+*Alamat Pengiriman:* ${cleanAddress || '-'}
 
 *Daftar Pesanan:*
 ${itemsText}
 
 *Total Pembayaran:* ${formatRupiah(totalCheckoutPrice)}
 ----------------------------------------
-*Catatan:* ${buyerNotes.trim() || '-'}`;
+*Catatan:* ${cleanNotes || '-'}`;
 
-    // Sistem Remember Me: simpan atau hapus data pemesan dari localStorage
+    // Sistem Remember Me
     if (rememberMe) {
       try {
         localStorage.setItem(
           'toko_buyer_data',
           JSON.stringify({
-            name: buyerName.trim(),
-            phone: buyerPhone.trim(),
-            address: buyerAddress.trim(),
+            name: cleanName,
+            phone: cleanPhone,
+            address: cleanAddress,
           })
         );
       } catch (err) {
@@ -190,25 +203,22 @@ ${itemsText}
       localStorage.removeItem('toko_buyer_data');
     }
 
-    // Buat URL wa.me
+    // Nomor WA yang telah dibersihkan
     const cleanWaNumber = adminWaNumber.replace(/[^0-9]/g, '');
     const waUrl = `https://wa.me/${cleanWaNumber}?text=${encodeURIComponent(message)}`;
 
-    // Buka WhatsApp di tab baru
-    window.open(waUrl, '_blank');
+    // Buka WhatsApp di tab baru dengan rel noopener noreferrer
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
 
     showToast('Pesanan berhasil dibuat! Membuka WhatsApp...');
 
-    // Jika checkout dari keranjang, kosongkan keranjang
     if (checkoutSource === 'cart') {
       setCartItems([]);
     }
 
-    // Tutup modal checkout & kosongkan catatan
     setIsCheckoutModalOpen(false);
     setBuyerNotes('');
 
-    // Jika user TIDAK mencentang rememberMe, kosongkan juga identitas pemesan
     if (!rememberMe) {
       setBuyerName('');
       setBuyerPhone('');
@@ -216,13 +226,11 @@ ${itemsText}
     }
   };
 
-  // Hitung total harga item di checkout modal
   const totalCheckoutPrice = checkoutItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
 
-  // Total item di keranjang
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const totalCartPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -230,10 +238,10 @@ ${itemsText}
   );
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans">
+    <div className="min-h-screen flex flex-col bg-[#0a0a0a] text-[#f0f0f0] font-sans">
       {/* Toast Notifikasi */}
       {toastMessage && (
-        <div className="fixed bottom-4 right-4 bg-gray-900 text-white text-xs px-4 py-2.5 rounded shadow-lg z-50 animate-bounce">
+        <div className="fixed bottom-4 right-4 bg-white text-black text-xs font-semibold px-4 py-2.5 rounded shadow-lg z-50 animate-bounce">
           ✓ {toastMessage}
         </div>
       )}
@@ -247,25 +255,25 @@ ${itemsText}
       />
 
       {/* Bar Pengaturan Nomor WhatsApp Tujuan */}
-      <div className="bg-gray-100 border-b border-gray-200 py-1.5 px-4 text-xs text-gray-600 flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-1">
+      <div className="bg-[#141414] border-b border-[#2a2a2a] py-1.5 px-4 text-xs text-gray-400 flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-1.5">
           <span>Halaman aktif:</span>
-          <strong className="text-gray-900 uppercase">
+          <strong className="text-white uppercase tracking-wider text-[11px]">
             {activePage === 'shop' ? 'Shop Page' : 'Info Page'}
           </strong>
         </div>
 
         <div className="flex items-center gap-2">
-          <span>Nomor WA Penerima Pesanan:</span>
+          <span>Nomor WA Tujuan:</span>
           <input
             type="text"
             value={adminWaNumber}
             onChange={(e) => setAdminWaNumber(e.target.value)}
-            title="Ubah nomor WA ini untuk menguji kirim ke nomor WhatsApp Anda sendiri"
+            title="Nomor WhatsApp admin penerima pesanan"
             placeholder="628123456789"
-            className="border border-gray-300 rounded px-2 py-0.5 text-xs bg-white text-gray-800 font-mono w-36 focus:outline-none"
+            className="border border-[#333] rounded px-2 py-0.5 text-xs bg-[#0a0a0a] text-white font-mono w-36 focus:outline-none focus:border-white"
           />
-          <span className="text-[10px] text-gray-400">(Bisa diganti)</span>
+          <span className="text-[10px] text-gray-500">(Bisa diganti)</span>
         </div>
       </div>
 
@@ -273,28 +281,35 @@ ${itemsText}
       <main className="flex-1">
         {activePage === 'shop' ? (
           <ShopPage
-            cart={cartItems}
             onAddToCart={handleAddToCart}
             onDirectCheckout={handleDirectCheckout}
             onNavigateToInfo={() => setActivePage('info')}
           />
         ) : (
-          <InfoPage />
+          <Suspense
+            fallback={
+              <div className="py-24 text-center text-gray-400 text-sm">
+                Memuat Informasi Toko...
+              </div>
+            }
+          >
+            <InfoPage />
+          </Suspense>
         )}
       </main>
 
       {/* 3. Modal Drawer Keranjang Belanja */}
       {isCartOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex justify-end">
-          <div className="bg-white w-full max-w-md h-full flex flex-col shadow-xl">
+        <div className="fixed inset-0 bg-black/80 z-50 flex justify-end">
+          <div className="bg-[#141414] border-l border-[#2a2a2a] w-full max-w-md h-full flex flex-col shadow-2xl">
             {/* Header Keranjang */}
-            <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-              <h2 className="font-bold text-lg text-gray-900">
+            <div className="p-4 border-b border-[#2a2a2a] flex justify-between items-center">
+              <h2 className="font-bold text-base text-white">
                 Keranjang Belanja ({totalCartCount})
               </h2>
               <button
                 onClick={() => setIsCartOpen(false)}
-                className="text-gray-500 hover:text-black text-xl cursor-pointer"
+                className="text-gray-400 hover:text-white text-xl cursor-pointer"
               >
                 ✕
               </button>
@@ -303,34 +318,34 @@ ${itemsText}
             {/* List Item Keranjang */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
               {cartItems.length === 0 ? (
-                <div className="text-center py-16 text-gray-400 text-sm">
+                <div className="text-center py-20 text-gray-500 text-xs">
                   Keranjang masih kosong. Silakan pilih produk di katalog!
                 </div>
               ) : (
                 cartItems.map((item) => (
                   <div
                     key={item.id}
-                    className="border border-gray-200 p-3 rounded flex justify-between items-center bg-gray-50"
+                    className="border border-[#2a2a2a] p-3 rounded bg-[#0a0a0a] flex justify-between items-center"
                   >
                     <div>
-                      <h4 className="font-semibold text-sm text-gray-900">{item.name}</h4>
-                      <p className="text-xs text-gray-500">
+                      <h4 className="font-semibold text-xs sm:text-sm text-white">{item.name}</h4>
+                      <p className="text-[11px] text-gray-400 mt-0.5">
                         {formatRupiah(item.price)} x {item.quantity} ={' '}
                         {formatRupiah(item.price * item.quantity)}
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => handleUpdateQuantity(item.id, -1)}
-                        className="w-7 h-7 border border-gray-300 rounded text-xs hover:bg-gray-200 font-bold cursor-pointer"
+                        className="w-6 h-6 border border-[#333] rounded text-xs text-white hover:bg-[#222] font-bold cursor-pointer"
                       >
                         -
                       </button>
-                      <span className="text-sm font-semibold">{item.quantity}</span>
+                      <span className="text-xs font-semibold min-w-4 text-center">{item.quantity}</span>
                       <button
                         onClick={() => handleUpdateQuantity(item.id, 1)}
-                        className="w-7 h-7 border border-gray-300 rounded text-xs hover:bg-gray-200 font-bold cursor-pointer"
+                        className="w-6 h-6 border border-[#333] rounded text-xs text-white hover:bg-[#222] font-bold cursor-pointer"
                       >
                         +
                       </button>
@@ -340,16 +355,16 @@ ${itemsText}
               )}
             </div>
 
-            {/* Footer Keranjang & Tombol Checkout */}
+            {/* Footer Keranjang */}
             {cartItems.length > 0 && (
-              <div className="p-4 border-t border-gray-200 space-y-3 bg-gray-50">
-                <div className="flex justify-between items-center text-sm font-bold">
-                  <span>Total Belanja:</span>
-                  <span className="text-base text-gray-900">{formatRupiah(totalCartPrice)}</span>
+              <div className="p-4 border-t border-[#2a2a2a] space-y-3 bg-[#0a0a0a]">
+                <div className="flex justify-between items-center text-xs sm:text-sm font-bold">
+                  <span className="text-gray-400">Total Belanja:</span>
+                  <span className="text-sm sm:text-base text-white">{formatRupiah(totalCartPrice)}</span>
                 </div>
                 <button
                   onClick={handleCartCheckout}
-                  className="w-full py-2.5 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded flex items-center justify-center gap-2 transition cursor-pointer"
+                  className="w-full py-2.5 bg-green-500 hover:bg-green-400 text-black text-xs sm:text-sm font-semibold rounded flex items-center justify-center gap-1.5 transition cursor-pointer"
                 >
                   <span>💬 Checkout Pesanan via WhatsApp</span>
                 </button>
@@ -359,17 +374,17 @@ ${itemsText}
         </div>
       )}
 
-      {/* 4. Modal Formulir Checkout WhatsApp (Dipakai dari Produk langsung & Keranjang) */}
+      {/* 4. Modal Formulir Checkout WhatsApp */}
       {isCheckoutModalOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded max-w-lg w-full max-h-[90vh] flex flex-col shadow-2xl border border-gray-300">
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+          <div className="bg-[#141414] rounded-lg max-w-lg w-full max-h-[90vh] flex flex-col shadow-2xl border border-[#2a2a2a]">
             {/* Header Modal Checkout */}
-            <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+            <div className="p-4 border-b border-[#2a2a2a] flex justify-between items-center">
               <div>
-                <h3 className="font-bold text-lg text-gray-900">
+                <h3 className="font-bold text-base sm:text-lg text-white">
                   Formulir Pemesanan via WhatsApp
                 </h3>
-                <p className="text-xs text-gray-500">
+                <p className="text-[11px] text-gray-400">
                   {checkoutSource === 'cart'
                     ? 'Memesan seluruh barang dari keranjang'
                     : 'Pemesanan langsung produk'}
@@ -377,7 +392,7 @@ ${itemsText}
               </div>
               <button
                 onClick={() => setIsCheckoutModalOpen(false)}
-                className="text-gray-400 hover:text-gray-700 text-xl cursor-pointer"
+                className="text-gray-400 hover:text-white text-lg cursor-pointer"
               >
                 ✕
               </button>
@@ -385,30 +400,29 @@ ${itemsText}
 
             {/* Isi Form Checkout */}
             <form onSubmit={handleSendToWhatsApp} className="p-4 overflow-y-auto space-y-4">
-              {/* Ringkasan Barang yang Dipesan */}
-              <div className="border border-gray-200 rounded p-3 bg-gray-50 space-y-2">
-                <span className="text-xs font-bold text-gray-700 uppercase">
+              {/* Ringkasan Barang */}
+              <div className="border border-[#2a2a2a] rounded p-3 bg-[#0a0a0a] space-y-2">
+                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
                   Ringkasan Barang
                 </span>
                 <div className="space-y-2 max-h-36 overflow-y-auto pr-1">
                   {checkoutItems.map((item) => (
                     <div
                       key={item.id}
-                      className="flex justify-between items-center text-xs border-b border-gray-200 pb-1.5"
+                      className="flex justify-between items-center text-xs border-b border-[#222] pb-1.5"
                     >
                       <div className="flex-1 pr-2">
-                        <span className="font-semibold text-gray-800">{item.name}</span>
-                        <div className="text-gray-500">
+                        <span className="font-semibold text-gray-200">{item.name}</span>
+                        <div className="text-[11px] text-gray-500">
                           {formatRupiah(item.price)} x {item.quantity}
                         </div>
                       </div>
 
-                      {/* Kontrol kuantitas */}
                       <div className="flex items-center gap-1.5">
                         <button
                           type="button"
                           onClick={() => handleUpdateCheckoutQuantity(item.id, -1)}
-                          className="w-5 h-5 border border-gray-300 rounded text-[10px] font-bold hover:bg-gray-200 cursor-pointer"
+                          className="w-5 h-5 border border-[#333] rounded text-[10px] font-bold text-white hover:bg-[#222] cursor-pointer"
                         >
                           -
                         </button>
@@ -418,22 +432,22 @@ ${itemsText}
                         <button
                           type="button"
                           onClick={() => handleUpdateCheckoutQuantity(item.id, 1)}
-                          className="w-5 h-5 border border-gray-300 rounded text-[10px] font-bold hover:bg-gray-200 cursor-pointer"
+                          className="w-5 h-5 border border-[#333] rounded text-[10px] font-bold text-white hover:bg-[#222] cursor-pointer"
                         >
                           +
                         </button>
                       </div>
 
-                      <span className="font-bold text-gray-900 text-right min-w-20 pl-2">
+                      <span className="font-bold text-white text-right min-w-20 pl-2">
                         {formatRupiah(item.price * item.quantity)}
                       </span>
                     </div>
                   ))}
                 </div>
 
-                <div className="flex justify-between text-xs font-bold pt-1 text-gray-900">
-                  <span>Total yang Harus Dibayar:</span>
-                  <span className="text-sm text-green-700">
+                <div className="flex justify-between text-xs font-bold pt-1 text-white">
+                  <span className="text-gray-400">Total:</span>
+                  <span className="text-green-400">
                     {formatRupiah(totalCheckoutPrice)}
                   </span>
                 </div>
@@ -442,61 +456,65 @@ ${itemsText}
               {/* Data Identitas Pembeli */}
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">
-                    Nama Pemesan <span className="text-red-500">*</span>
+                  <label className="block text-[11px] font-medium text-gray-400 mb-1">
+                    Nama Pemesan <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
                     required
+                    maxLength={100}
                     value={buyerName}
                     onChange={(e) => setBuyerName(e.target.value)}
                     placeholder="Contoh: Budi Santoso"
-                    className="w-full border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-green-600"
+                    className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded px-3 py-1.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-white transition"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  <label className="block text-[11px] font-medium text-gray-400 mb-1">
                     Nomor WhatsApp / HP Anda
                   </label>
                   <input
                     type="tel"
+                    maxLength={20}
                     value={buyerPhone}
                     onChange={(e) => setBuyerPhone(e.target.value)}
                     placeholder="Contoh: 08123456789"
-                    className="w-full border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-green-600"
+                    className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded px-3 py-1.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-white transition"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  <label className="block text-[11px] font-medium text-gray-400 mb-1">
                     Alamat Pengiriman
                   </label>
                   <textarea
                     rows={2}
+                    maxLength={300}
                     value={buyerAddress}
                     onChange={(e) => setBuyerAddress(e.target.value)}
                     placeholder="Alamat jalan, kelurahan, kota, kode pos..."
-                    className="w-full border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-green-600"
+                    className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded px-3 py-1.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-white transition resize-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  <label className="block text-[11px] font-medium text-gray-400 mb-1">
                     Catatan Khusus (Ukuran, Warna, dsb)
                   </label>
                   <input
                     type="text"
+                    maxLength={200}
                     value={buyerNotes}
                     onChange={(e) => setBuyerNotes(e.target.value)}
                     placeholder="Contoh: Warna hitam ukuran L"
-                    className="w-full border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-green-600"
+                    className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded px-3 py-1.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-white transition"
                   />
                 </div>
 
                 {/* Fitur Remember Me */}
                 <div className="flex items-center justify-between pt-1">
-                  <label className="flex items-center gap-2 text-xs text-gray-700 cursor-pointer select-none">
+                  <label className="flex items-center gap-2 text-xs text-gray-400 cursor-pointer select-none">
                     <input
                       type="checkbox"
                       checked={rememberMe}
@@ -507,7 +525,7 @@ ${itemsText}
                           localStorage.removeItem('toko_buyer_data');
                         }
                       }}
-                      className="rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer"
+                      className="rounded border-[#333] text-green-500 focus:ring-green-400 cursor-pointer bg-[#0a0a0a]"
                     />
                     <span>Ingat data saya (Nama, No WA, Alamat)</span>
                   </label>
@@ -522,7 +540,7 @@ ${itemsText}
                         localStorage.removeItem('toko_buyer_data');
                         showToast('Data tersimpan telah dibersihkan.');
                       }}
-                      className="text-[11px] text-gray-400 hover:text-red-600 underline cursor-pointer"
+                      className="text-[11px] text-gray-500 hover:text-red-400 underline cursor-pointer"
                       title="Hapus data yang tersimpan di perangkat ini"
                     >
                       Hapus data
@@ -532,27 +550,27 @@ ${itemsText}
               </div>
 
               {/* Petunjuk info WA */}
-              <div className="bg-green-50 border border-green-200 rounded p-2.5 text-xs text-green-800 space-y-1">
-                <p className="font-semibold">ℹ️ Cara Kerja:</p>
-                <p>
+              <div className="bg-[#1a1a1a] border border-[#333] rounded p-2.5 text-xs text-gray-400 space-y-1">
+                <p className="font-semibold text-gray-300">ℹ️ Cara Kerja:</p>
+                <p className="text-[11px] leading-relaxed">
                   Setelah menekan tombol di bawah, aplikasi akan membuka WhatsApp dan
-                  secara otomatis mengisi pesan berisi nama dan rincian pesanan ke nomor:{' '}
-                  <strong>{adminWaNumber}</strong>.
+                  secara otomatis mengisi pesan rincian pesanan ke nomor admin:{' '}
+                  <strong className="text-white">{adminWaNumber}</strong>.
                 </p>
               </div>
 
               {/* Tombol Aksi */}
-              <div className="flex gap-2 pt-2 border-t">
+              <div className="flex gap-2 pt-2 border-t border-[#2a2a2a]">
                 <button
                   type="button"
                   onClick={() => setIsCheckoutModalOpen(false)}
-                  className="flex-1 py-2 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                  className="flex-1 py-2 border border-[#333] rounded text-sm text-gray-400 hover:text-white hover:bg-[#222] cursor-pointer transition"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2 bg-green-600 hover:bg-green-700 text-white rounded text-sm font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer"
+                  className="flex-1 py-2 bg-green-500 hover:bg-green-400 text-black rounded text-sm font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer"
                 >
                   <span>Kirim Pesanan ke WA</span>
                 </button>

@@ -2,58 +2,73 @@
 
 import React from 'react';
 
-export default function Navbar({ activePage, setActivePage, cartCount = 0, onOpenCart }) {
+export default function Navbar({
+  activePage,
+  setActivePage,
+  cartCount = 0,
+  onOpenCart,
+}) {
   return (
-    <header className="border-b border-gray-200 bg-white sticky top-0 z-40">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Brand / Logo */}
-        <div className="flex items-center gap-2">
+    <header className="border-b border-[#2a2a2a] bg-[#0a0a0a]/95 backdrop-blur-sm sticky top-0 z-40">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+
+        {/* Brand */}
+        <button
+          onClick={() => setActivePage('shop')}
+          className="flex items-center gap-1.5 cursor-pointer group"
+        >
+          <span className="px-1.5 py-0.5 bg-white text-black text-[10px] sm:text-xs font-bold rounded tracking-wider">
+            TOKO
+          </span>
+          <span className="text-base sm:text-lg font-semibold text-white group-hover:text-gray-300 transition">
+            Online
+          </span>
+        </button>
+
+        {/* Navigation */}
+        <nav className="flex items-center gap-1 sm:gap-2">
           <button
             onClick={() => setActivePage('shop')}
-            className="text-xl font-bold tracking-tight text-gray-900 cursor-pointer flex items-center gap-1.5"
+            className={`
+              px-3 py-1.5 text-xs sm:text-sm font-medium rounded transition cursor-pointer
+              ${activePage === 'shop'
+                ? 'bg-white text-black'
+                : 'text-gray-400 hover:text-white hover:bg-[#1a1a1a]'}
+            `}
           >
-            <span className="p-1 bg-black text-white text-xs rounded">TOKO</span>
-            <span>Online</span>
+            Shop
           </button>
-        </div>
-
-        {/* Menu Navigasi Antar Halaman */}
-        <nav className="flex items-center space-x-2 sm:space-x-4">
-          <button
-            onClick={() => setActivePage('shop')}
-            className={`px-3 py-1.5 text-sm font-medium rounded transition cursor-pointer ${
-              activePage === 'shop'
-                ? 'bg-black text-white'
-                : 'text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            Shop Page
-          </button>
-
           <button
             onClick={() => setActivePage('info')}
-            className={`px-3 py-1.5 text-sm font-medium rounded transition cursor-pointer ${
-              activePage === 'info'
-                ? 'bg-black text-white'
-                : 'text-gray-700 hover:bg-gray-100'
-            }`}
+            className={`
+              px-3 py-1.5 text-xs sm:text-sm font-medium rounded transition cursor-pointer
+              ${activePage === 'info'
+                ? 'bg-white text-black'
+                : 'text-gray-400 hover:text-white hover:bg-[#1a1a1a]'}
+            `}
           >
-            Info Page
+            Info
           </button>
         </nav>
 
-        {/* Cart Button */}
-        <div>
-          <button
-            onClick={onOpenCart}
-            className="relative border border-gray-300 px-3 py-1.5 text-xs sm:text-sm rounded hover:bg-gray-50 flex items-center gap-1.5 cursor-pointer"
-          >
-            <span>🛒 Keranjang</span>
-            <span className="bg-black text-white text-xs font-bold rounded-full px-1.5 py-0.2">
+        {/* Cart */}
+        <button
+          onClick={onOpenCart}
+          className="
+            relative border border-[#333] px-2.5 py-1.5
+            text-xs sm:text-sm rounded
+            hover:bg-[#1a1a1a] hover:border-[#444]
+            flex items-center gap-1.5 cursor-pointer transition
+          "
+        >
+          <span className="hidden sm:inline">🛒</span>
+          <span>Keranjang</span>
+          {cartCount > 0 && (
+            <span className="bg-white text-black text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
               {cartCount}
             </span>
-          </button>
-        </div>
+          )}
+        </button>
       </div>
     </header>
   );

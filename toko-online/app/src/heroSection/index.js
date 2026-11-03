@@ -2,28 +2,71 @@
 
 import React from 'react';
 
+/**
+ * HeroSection — area utama dengan slot video background.
+ *
+ * Jika user ingin menambahkan video, letakkan file di /public/hero-video.mp4
+ * lalu ganti prop videoSrc atau langsung uncomment path di bawah.
+ */
 export default function HeroSection({ onShopNowClick, onInfoClick }) {
+  const videoSrc = '/hero-video.mp4'; // Ganti path jika perlu
+
   return (
-    <section className="border-b border-gray-200 py-16 px-4 sm:px-6 lg:px-8 text-center bg-gray-50">
-      <div className="max-w-3xl mx-auto space-y-4">
-        <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
+    <section className="relative w-full min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center overflow-hidden border-b border-[#2a2a2a]">
+
+      {/* Video Background Layer */}
+      <div className="absolute inset-0 z-0">
+        {/* Video element — fallback ke warna solid jika file belum ada */}
+        <video
+          className="w-full h-full object-cover"
+          src={videoSrc}
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster=""
+          onError={(e) => {
+            // Sembunyikan video jika file belum tersedia
+            const target = e.currentTarget;
+            target.style.display = 'none';
+          }}
+        />
+
+        {/* Fallback: gradient background jika video belum ada */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#111] to-[#1a1a1a]" />
+
+        {/* Dark overlay agar teks tetap terbaca di atas video */}
+        <div className="absolute inset-0 bg-black/60" />
+      </div>
+
+      {/* Content Layer */}
+      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center space-y-5">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
           Selamat Datang di Toko Kami
         </h1>
-        <p className="text-lg text-gray-600">
-          Tempat belanja produk kebutuhan harian dengan kualitas terbaik, harga bersahabat, dan pelayanan cepat.
+        <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-xl mx-auto">
+          Produk kebutuhan harian dengan kualitas terbaik, harga bersahabat, dan pelayanan cepat.
         </p>
-        <div className="pt-4 flex flex-wrap justify-center gap-4">
+        <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
           <button
             onClick={onShopNowClick}
-            className="px-6 py-3 bg-black text-white font-medium rounded hover:bg-gray-800 transition cursor-pointer"
+            className="
+              w-full sm:w-auto px-6 py-3
+              bg-white text-black font-semibold text-sm
+              rounded hover:bg-gray-200 transition cursor-pointer
+            "
           >
             Lihat Produk
           </button>
           <button
             onClick={onInfoClick}
-            className="px-6 py-3 border border-gray-400 text-gray-800 font-medium rounded hover:bg-gray-100 transition cursor-pointer"
+            className="
+              w-full sm:w-auto px-6 py-3
+              border border-[#444] text-gray-300 font-medium text-sm
+              rounded hover:bg-[#1a1a1a] hover:text-white transition cursor-pointer
+            "
           >
-            Pelajari Tentang Kami
+            Tentang Kami
           </button>
         </div>
       </div>

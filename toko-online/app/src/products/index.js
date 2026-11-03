@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 const INITIAL_PRODUCTS = [
   {
@@ -55,112 +55,167 @@ const INITIAL_PRODUCTS = [
 
 const CATEGORIES = ['Semua', 'Pakaian', 'Sepatu', 'Aksesoris', 'Peralatan', 'Elektronik'];
 
-export default function Products({ cart, onAddToCart, onDirectCheckout }) {
+/**
+ * Sanitize string agar aman ditampilkan (basic XSS prevention)
+ */
+function sanitize(str) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+export default function Products({ onAddToCart, onDirectCheckout }) {
   const [selectedCategory, setSelectedCategory] = useState('Semua');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const filteredProducts = INITIAL_PRODUCTS.filter((product) => {
-    const matchesCategory =
-      selectedCategory === 'Semua' || product.category === selectedCategory;
-    const matchesSearch =
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // Memoize filtered products agar tidak re-compute setiap render
+  const filteredProducts = useMemo(() => {
+    const query = searchQuery.toLowerCase().trim();
+    return INITIAL_PRODUCTS.filter((product) => {
+      const matchesCategory =
+        selectedCategory === 'Semua' || product.category === selectedCategory;
+      const matchesSearch =
+        !query ||
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query);
+      return matchesCategory && matchesSearch;
+    });
+  }, [selectedCategory, searchQuery]);
 
-  const formatRupiah = (num) => {
-    return 'Rp ' + num.toLocaleString('id-ID');
-  };
+  const formatRupiah = (num) => 'Rp ' + num.toLocaleString('id-ID');
 
   return (
-    <section id="products-section" className="py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-6 border-b border-gray-200 gap-4">
+    <section
+      id="products-section"
+      className="py-10 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto"
+    >
+      {/* Header & Search */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-6 border-b border-[#2a2a2a] gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Katalog Produk</h2>
-          <p className="text-sm text-gray-500">Pilih produk untuk beli via WhatsApp atau masukkan ke keranjang</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-white">Katalog Produk</h2>
+          <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
+            Beli langsung via WhatsApp atau masukkan ke keranjang
+          </p>
         </div>
 
-        {/* Search Input */}
-        <div className="w-full sm:w-64">
+        <div className="w-full sm:w-56">
           <input
             type="text"
             placeholder="Cari produk..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+            maxLength={100}
+            className="
+              w-full bg-[#141414] border border-[#2a2a2a] rounded px-3 py-2
+              text-sm text-white placeholder-gray-600
+              focus:outline-none focus:border-[#444]
+              transition
+            "
           />
         </div>
       </div>
 
-      {/* Filter Kategori */}
-      <div className="flex flex-wrap gap-2 my-6">
+      {/* Category Filter */}
+      <div className="flex flex-wrap gap-2 my-5 no-scrollbar">
         {CATEGORIES.map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`px-3 py-1.5 text-xs sm:text-sm rounded border cursor-pointer ${
-              selectedCategory === cat
-                ? 'bg-black text-white border-black'
-                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
-            }`}
+            className={`
+              px-3 py-1.5 text-xs rounded border cursor-pointer transition whitespace-nowrap
+              ${selectedCategory === cat
+                ? 'bg-white text-black border-white'
+                : 'bg-transparent text-gray-400 border-[#333] hover:border-[#555] hover:text-white'}
+            `}
           >
             {cat}
           </button>
         ))}
       </div>
 
-      {/* Grid Produk */}
+      {/* Product Grid */}
       {filteredProducts.length === 0 ? (
-        <div className="text-center py-12 text-gray-500 border border-dashed border-gray-300 rounded">
-          Tidak ada produk yang cocok dengan pencarian.
+        <div className="text-center py-16 text-gray-600 border border-dashed border-[#2a2a2a] rounded">
+          Tidak ada produk yang cocok.
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {filteredProducts.map((item) => (
             <div
               key={item.id}
-              className="border border-gray-200 rounded p-4 flex flex-col justify-between hover:shadow-sm transition bg-white"
+              className="
+                bg-[#141414] border border-[#2a2a2a] rounded-lg
+                p-4 flex flex-col justify-between
+                hover:border-[#333] transition
+              "
             >
               <div>
-                <div className="h-32 bg-gray-100 flex items-center justify-center text-gray-400 rounded mb-3 text-xs uppercase tracking-wide">
-                  [ Gambar: {item.category} ]
+                {/* Image placeholder */}
+                <div className="h-28 sm:h-32 bg-[#1a1a1a] flex items-center justify-center text-gray-600 rounded mb-3 text-[10px] uppercase tracking-widest">
+                  {item.category}
                 </div>
-                <div className="flex justify-between items-start">
-                  <h3 className="font-semibold text-gray-900 text-base">{item.name}</h3>
-                  <span className="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">
+
+                <div className="flex justify-between items-start gap-2">
+                  <h3 className="font-semibold text-white text-sm leading-snug">
+                    {item.name}
+                  </h3>
+                  <span className="text-[10px] bg-[#1a1a1a] text-gray-500 px-1.5 py-0.5 rounded shrink-0">
                     {item.category}
                   </span>
                 </div>
-                <p className="text-sm text-gray-500 mt-1 line-clamp-2">{item.description}</p>
+
+                <p className="text-xs text-gray-500 mt-1.5 line-clamp-2 leading-relaxed">
+                  {item.description}
+                </p>
+
                 <div className="mt-3 flex items-baseline justify-between">
-                  <span className="text-base font-bold text-gray-900">
+                  <span className="text-sm font-bold text-white">
                     {formatRupiah(item.price)}
                   </span>
-                  <span className="text-xs text-gray-500">Stok: {item.stock}</span>
+                  <span className="text-[10px] text-gray-600">
+                    Stok: {item.stock}
+                  </span>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-gray-100 space-y-2">
+              {/* Actions */}
+              <div className="mt-4 pt-3 border-t border-[#1a1a1a] space-y-2">
                 <div className="flex gap-2">
                   <button
                     onClick={() => setSelectedProduct(item)}
-                    className="flex-1 py-1.5 px-2 border border-gray-300 text-xs text-gray-700 rounded hover:bg-gray-50 cursor-pointer text-center"
+                    className="
+                      flex-1 py-1.5 text-xs text-gray-400
+                      border border-[#333] rounded
+                      hover:text-white hover:border-[#555] transition cursor-pointer
+                    "
                   >
                     Detail
                   </button>
                   <button
                     onClick={() => onAddToCart && onAddToCart(item)}
-                    className="flex-1 py-1.5 px-2 border border-black text-black text-xs rounded hover:bg-gray-100 cursor-pointer text-center"
+                    className="
+                      flex-1 py-1.5 text-xs text-white
+                      border border-white rounded
+                      hover:bg-white hover:text-black transition cursor-pointer
+                    "
                   >
                     + Keranjang
                   </button>
                 </div>
                 <button
                   onClick={() => onDirectCheckout && onDirectCheckout(item)}
-                  className="w-full py-1.5 px-2 bg-green-600 hover:bg-green-700 text-white font-medium text-xs rounded transition flex items-center justify-center gap-1 cursor-pointer"
+                  className="
+                    w-full py-1.5 text-xs font-medium text-black
+                    bg-green-500 hover:bg-green-400 rounded
+                    transition cursor-pointer flex items-center justify-center gap-1
+                  "
                 >
-                  <span>💬 Beli Langsung (WA)</span>
+                  <span>💬</span>
+                  <span>Beli Langsung (WA)</span>
                 </button>
               </div>
             </div>
@@ -168,39 +223,50 @@ export default function Products({ cart, onAddToCart, onDirectCheckout }) {
         </div>
       )}
 
-      {/* Modal Detail Produk */}
+      {/* Product Detail Modal */}
       {selectedProduct && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded max-w-md w-full p-6 space-y-4 border border-gray-300 shadow-lg">
-            <div className="flex justify-between items-center border-b pb-2">
-              <h3 className="font-bold text-lg text-gray-900">{selectedProduct.name}</h3>
+        <div
+          className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50"
+          onClick={() => setSelectedProduct(null)}
+        >
+          <div
+            className="bg-[#141414] border border-[#2a2a2a] rounded-lg max-w-md w-full p-5 space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="flex justify-between items-center border-b border-[#2a2a2a] pb-3">
+              <h3 className="font-bold text-base text-white">
+                {sanitize(selectedProduct.name)}
+              </h3>
               <button
                 onClick={() => setSelectedProduct(null)}
-                className="text-gray-400 hover:text-gray-700 text-lg cursor-pointer"
+                className="text-gray-600 hover:text-white text-lg cursor-pointer transition"
               >
                 ✕
               </button>
             </div>
-            <div className="h-40 bg-gray-100 flex items-center justify-center text-gray-400 rounded text-sm">
-              [ Preview Foto Produk ]
+
+            {/* Image placeholder */}
+            <div className="h-36 bg-[#1a1a1a] flex items-center justify-center text-gray-600 rounded text-xs">
+              Preview Foto Produk
             </div>
-            <p className="text-sm text-gray-600">{selectedProduct.description}</p>
-            <div className="space-y-1 text-sm">
-              <p>
-                <strong>Kategori:</strong> {selectedProduct.category}
-              </p>
-              <p>
-                <strong>Harga:</strong> {formatRupiah(selectedProduct.price)}
-              </p>
-              <p>
-                <strong>Sisa Stok:</strong> {selectedProduct.stock} unit
-              </p>
+
+            <p className="text-sm text-gray-400 leading-relaxed">
+              {selectedProduct.description}
+            </p>
+
+            <div className="space-y-1 text-sm text-gray-300">
+              <p><span className="text-gray-500">Kategori:</span> {selectedProduct.category}</p>
+              <p><span className="text-gray-500">Harga:</span> {formatRupiah(selectedProduct.price)}</p>
+              <p><span className="text-gray-500">Stok:</span> {selectedProduct.stock} unit</p>
             </div>
-            <div className="space-y-2 pt-2 border-t">
+
+            {/* Actions */}
+            <div className="space-y-2 pt-3 border-t border-[#2a2a2a]">
               <div className="flex gap-2">
                 <button
                   onClick={() => setSelectedProduct(null)}
-                  className="flex-1 py-2 border border-gray-300 rounded text-sm hover:bg-gray-100 cursor-pointer"
+                  className="flex-1 py-2 border border-[#333] rounded text-sm text-gray-400 hover:text-white hover:border-[#555] transition cursor-pointer"
                 >
                   Tutup
                 </button>
@@ -209,20 +275,20 @@ export default function Products({ cart, onAddToCart, onDirectCheckout }) {
                     onAddToCart && onAddToCart(selectedProduct);
                     setSelectedProduct(null);
                   }}
-                  className="flex-1 py-2 border border-black text-black rounded text-sm hover:bg-gray-50 cursor-pointer"
+                  className="flex-1 py-2 border border-white text-white rounded text-sm hover:bg-white hover:text-black transition cursor-pointer"
                 >
                   + Keranjang
                 </button>
               </div>
               <button
                 onClick={() => {
-                  const item = selectedProduct;
+                  const p = selectedProduct;
                   setSelectedProduct(null);
-                  onDirectCheckout && onDirectCheckout(item);
+                  onDirectCheckout && onDirectCheckout(p);
                 }}
-                className="w-full py-2 bg-green-600 hover:bg-green-700 text-white rounded text-sm font-semibold flex items-center justify-center gap-1 cursor-pointer transition"
+                className="w-full py-2 bg-green-500 hover:bg-green-400 text-black rounded text-sm font-semibold transition cursor-pointer"
               >
-                <span>💬 Checkout via WhatsApp</span>
+                💬 Checkout via WhatsApp
               </button>
             </div>
           </div>

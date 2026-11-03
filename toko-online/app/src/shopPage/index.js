@@ -5,7 +5,6 @@ import HeroSection from '../heroSection';
 import Products from '../products';
 
 export default function ShopPage({
-  cart,
   onAddToCart,
   onDirectCheckout,
   onNavigateToInfo,
@@ -19,15 +18,11 @@ export default function ShopPage({
 
   return (
     <div className="w-full">
-      {/* 1. Hero Section */}
       <HeroSection
         onShopNowClick={scrollToProducts}
         onInfoClick={onNavigateToInfo}
       />
-
-      {/* 2. Products Section */}
       <Products
-        cart={cart}
         onAddToCart={onAddToCart}
         onDirectCheckout={onDirectCheckout}
       />

@@ -29,6 +29,14 @@ const INITIAL_TESTIMONIALS = [
   },
 ];
 
+/**
+ * Sanitize input string dasar.
+ */
+function sanitize(str) {
+  if (typeof str !== 'string') return '';
+  return str.replace(/[<>]/g, '');
+}
+
 export default function Testimony() {
   const [testimonials, setTestimonials] = useState(INITIAL_TESTIMONIALS);
   const [newReview, setNewReview] = useState({
@@ -40,14 +48,16 @@ export default function Testimony() {
 
   const handleAddReview = (e) => {
     e.preventDefault();
-    if (!newReview.name || !newReview.comment) return;
+    const cleanName = sanitize(newReview.name.trim());
+    const cleanComment = sanitize(newReview.comment.trim());
+    if (!cleanName || !cleanComment) return;
 
     const reviewObj = {
       id: Date.now(),
-      name: newReview.name,
+      name: cleanName,
       role: 'Pelanggan Terverifikasi',
       rating: Number(newReview.rating),
-      comment: newReview.comment,
+      comment: cleanComment,
       date: 'Baru saja',
     };
 
@@ -59,92 +69,128 @@ export default function Testimony() {
   return (
     <section className="py-10">
       <div className="max-w-4xl mx-auto space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-l-4 border-black pl-4 gap-2">
+
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-l-2 border-white pl-4 gap-2">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Ulasan & Testimoni (Testimony)</h2>
-            <p className="text-gray-500 text-sm">Apa kata mereka yang telah berbelanja di tempat kami</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-white">Testimoni</h2>
+            <p className="text-gray-500 text-xs mt-0.5">Ulasan dari pelanggan kami</p>
           </div>
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="self-start sm:self-auto px-3 py-1.5 border border-black text-xs font-medium rounded hover:bg-black hover:text-white transition cursor-pointer"
+            className="
+              self-start px-3 py-1.5 border border-white
+              text-xs font-medium rounded text-white
+              hover:bg-white hover:text-black transition cursor-pointer
+            "
           >
-            {showAddForm ? 'Tutup Formulir' : '+ Tulis Testimoni'}
+            {showAddForm ? 'Tutup' : '+ Tulis Testimoni'}
           </button>
         </div>
 
-        {/* Form Tambah Testimoni */}
+        {/* Add Review Form */}
         {showAddForm && (
           <form
             onSubmit={handleAddReview}
-            className="border border-gray-300 p-4 rounded bg-gray-50 space-y-3"
+            className="border border-[#2a2a2a] p-4 rounded-lg bg-[#141414] space-y-3"
           >
-            <h3 className="font-semibold text-sm text-gray-900">Bagikan Pengalaman Belanja Anda</h3>
+            <h3 className="font-semibold text-xs text-white">
+              Bagikan Pengalaman Anda
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs text-gray-700 mb-1">Nama Anda</label>
+                <label className="block text-[10px] text-gray-500 mb-1 uppercase tracking-wide">
+                  Nama
+                </label>
                 <input
                   type="text"
                   required
+                  maxLength={50}
                   value={newReview.name}
                   onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
                   placeholder="Nama Anda"
-                  className="w-full border border-gray-300 rounded px-2.5 py-1 text-sm bg-white focus:outline-none"
+                  className="
+                    w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded
+                    px-2.5 py-1.5 text-sm text-white placeholder-gray-600
+                    focus:outline-none focus:border-[#444] transition
+                  "
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-700 mb-1">Rating</label>
+                <label className="block text-[10px] text-gray-500 mb-1 uppercase tracking-wide">
+                  Rating
+                </label>
                 <select
                   value={newReview.rating}
                   onChange={(e) => setNewReview({ ...newReview, rating: e.target.value })}
-                  className="w-full border border-gray-300 rounded px-2.5 py-1 text-sm bg-white focus:outline-none"
+                  className="
+                    w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded
+                    px-2.5 py-1.5 text-sm text-white
+                    focus:outline-none focus:border-[#444] transition
+                  "
                 >
-                  <option value={5}>⭐⭐⭐⭐⭐ (5 - Sangat Puas)</option>
-                  <option value={4}>⭐⭐⭐⭐ (4 - Puas)</option>
-                  <option value={3}>⭐⭐⭐ (3 - Cukup)</option>
-                  <option value={2}>⭐⭐ (2 - Kurang)</option>
-                  <option value={1}>⭐ (1 - Kecewa)</option>
+                  <option value={5}>★★★★★ (5)</option>
+                  <option value={4}>★★★★☆ (4)</option>
+                  <option value={3}>★★★☆☆ (3)</option>
+                  <option value={2}>★★☆☆☆ (2)</option>
+                  <option value={1}>★☆☆☆☆ (1)</option>
                 </select>
               </div>
             </div>
-
             <div>
-              <label className="block text-xs text-gray-700 mb-1">Ulasan</label>
+              <label className="block text-[10px] text-gray-500 mb-1 uppercase tracking-wide">
+                Ulasan
+              </label>
               <textarea
                 rows={2}
                 required
+                maxLength={500}
                 value={newReview.comment}
                 onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
-                placeholder="Tulis ulasan Anda di sini..."
-                className="w-full border border-gray-300 rounded px-2.5 py-1 text-sm bg-white focus:outline-none"
+                placeholder="Tulis ulasan Anda..."
+                className="
+                  w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded
+                  px-2.5 py-1.5 text-sm text-white placeholder-gray-600
+                  focus:outline-none focus:border-[#444] transition resize-none
+                "
               />
             </div>
-
             <button
               type="submit"
-              className="px-4 py-1.5 bg-black text-white text-xs rounded hover:bg-gray-800 cursor-pointer"
+              className="
+                px-4 py-1.5 bg-white text-black text-xs font-medium
+                rounded hover:bg-gray-200 transition cursor-pointer
+              "
             >
               Kirim Testimoni
             </button>
           </form>
         )}
 
-        {/* List Testimoni */}
+        {/* Testimonial Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {testimonials.map((t) => (
             <div
               key={t.id}
-              className="border border-gray-200 p-4 rounded bg-white flex flex-col justify-between space-y-3"
+              className="
+                border border-[#2a2a2a] p-4 rounded-lg bg-[#141414]
+                flex flex-col justify-between space-y-3
+              "
             >
               <div>
-                <div className="flex justify-between items-center text-xs text-gray-400 mb-1">
-                  <span>{'★'.repeat(t.rating)}{'☆'.repeat(5 - t.rating)}</span>
+                <div className="flex justify-between items-center text-xs text-gray-600 mb-2">
+                  <span className="text-yellow-500">
+                    {'★'.repeat(t.rating)}
+                    <span className="text-[#333]">{'★'.repeat(5 - t.rating)}</span>
+                  </span>
                   <span>{t.date}</span>
                 </div>
-                <p className="text-sm text-gray-700 italic">“{t.comment}”</p>
+                <p className="text-sm text-gray-300 italic leading-relaxed">
+                  &ldquo;{t.comment}&rdquo;
+                </p>
               </div>
-              <div className="border-t border-gray-100 pt-2 text-xs">
-                <span className="font-semibold text-gray-900 block">{t.name}</span>
-                <span className="text-gray-500">{t.role}</span>
+              <div className="border-t border-[#1a1a1a] pt-2 text-xs">
+                <span className="font-semibold text-white block">{t.name}</span>
+                <span className="text-gray-600">{t.role}</span>
               </div>
             </div>
           ))}
