@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import ShopPage from './src/shopPage';
@@ -41,6 +41,25 @@ export default function Home() {
   const [buyerPhone, setBuyerPhone] = useState<string>('');
   const [buyerAddress, setBuyerAddress] = useState<string>('');
   const [buyerNotes, setBuyerNotes] = useState<string>('');
+
+  // Sistem Remember Me (Simpan data pemesan di localStorage)
+  const [rememberMe, setRememberMe] = useState<boolean>(true);
+
+  // Muat data pemesan dari localStorage saat pertama kali dibuka
+  useEffect(() => {
+    try {
+      const savedData = localStorage.getItem('toko_buyer_data');
+      if (savedData) {
+        const parsed = JSON.parse(savedData);
+        if (parsed.name) setBuyerName(parsed.name);
+        if (parsed.phone) setBuyerPhone(parsed.phone);
+        if (parsed.address) setBuyerAddress(parsed.address);
+        setRememberMe(true);
+      }
+    } catch (e) {
+      console.error('Gagal memuat data tersimpan:', e);
+    }
+  }, []);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -139,7 +158,7 @@ export default function Home() {
       )
       .join('\n');
 
-    // Susun pesan WhatsApp
+    // Susun pesan WhatsApp (langsung berakhir di catatan tanpa kalimat halo admin)
     const message = `*PESANAN BARU - TOKO ONLINE*
 ----------------------------------------
 *Nama Pemesan:* ${buyerName.trim()}
@@ -151,9 +170,25 @@ ${itemsText}
 
 *Total Pembayaran:* ${formatRupiah(totalCheckoutPrice)}
 ----------------------------------------
-*Catatan:* ${buyerNotes.trim() || 'Tidak ada catatan'}
+*Catatan:* ${buyerNotes.trim() || '-'}`;
 
-Halo Admin, saya ingin memesan barang di atas. Mohon info ketersediaan stok & metode pembayaran. Terima kasih!`;
+    // Sistem Remember Me: simpan atau hapus data pemesan dari localStorage
+    if (rememberMe) {
+      try {
+        localStorage.setItem(
+          'toko_buyer_data',
+          JSON.stringify({
+            name: buyerName.trim(),
+            phone: buyerPhone.trim(),
+            address: buyerAddress.trim(),
+          })
+        );
+      } catch (err) {
+        console.error('Gagal menyimpan data ke localStorage:', err);
+      }
+    } else {
+      localStorage.removeItem('toko_buyer_data');
+    }
 
     // Buat URL wa.me
     const cleanWaNumber = adminWaNumber.replace(/[^0-9]/g, '');
@@ -169,12 +204,16 @@ Halo Admin, saya ingin memesan barang di atas. Mohon info ketersediaan stok & me
       setCartItems([]);
     }
 
-    // Reset formulir & tutup modal
+    // Tutup modal checkout & kosongkan catatan
     setIsCheckoutModalOpen(false);
-    setBuyerName('');
-    setBuyerPhone('');
-    setBuyerAddress('');
     setBuyerNotes('');
+
+    // Jika user TIDAK mencentang rememberMe, kosongkan juga identitas pemesan
+    if (!rememberMe) {
+      setBuyerName('');
+      setBuyerPhone('');
+      setBuyerAddress('');
+    }
   };
 
   // Hitung total harga item di checkout modal
@@ -453,6 +492,42 @@ Halo Admin, saya ingin memesan barang di atas. Mohon info ketersediaan stok & me
                     placeholder="Contoh: Warna hitam ukuran L"
                     className="w-full border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-green-600"
                   />
+                </div>
+
+                {/* Fitur Remember Me */}
+                <div className="flex items-center justify-between pt-1">
+                  <label className="flex items-center gap-2 text-xs text-gray-700 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={rememberMe}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setRememberMe(checked);
+                        if (!checked) {
+                          localStorage.removeItem('toko_buyer_data');
+                        }
+                      }}
+                      className="rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer"
+                    />
+                    <span>Ingat data saya (Nama, No WA, Alamat)</span>
+                  </label>
+
+                  {(buyerName || buyerPhone || buyerAddress) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setBuyerName('');
+                        setBuyerPhone('');
+                        setBuyerAddress('');
+                        localStorage.removeItem('toko_buyer_data');
+                        showToast('Data tersimpan telah dibersihkan.');
+                      }}
+                      className="text-[11px] text-gray-400 hover:text-red-600 underline cursor-pointer"
+                      title="Hapus data yang tersimpan di perangkat ini"
+                    >
+                      Hapus data
+                    </button>
+                  )}
                 </div>
               </div>
 
