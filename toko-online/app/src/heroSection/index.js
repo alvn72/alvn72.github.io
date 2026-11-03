@@ -1,24 +1,22 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 export default function HeroSection({ onShopNowClick, onInfoClick }) {
   const videoRef = useRef(null);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [hasError, setHasError] = useState(false);
 
-  // Path video di public/videoAja/heroSecToko.mp4
   const videoSrc = '/videoAja/heroSecToko.mp4';
 
   useEffect(() => {
-    // Memastikan autoplay berjalan di semua browser (Chrome/Safari/Mobile)
-    if (videoRef.current) {
-      videoRef.current.defaultMuted = true;
-      videoRef.current.muted = true;
-      const playPromise = videoRef.current.play();
+    const video = videoRef.current;
+    if (video) {
+      video.defaultMuted = true;
+      video.muted = true;
+      video.playsInline = true;
+      const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch((err) => {
-          console.warn('Autoplay terhalang oleh kebijakan browser:', err);
+          console.warn('Autoplay info:', err);
         });
       }
     }
@@ -29,30 +27,20 @@ export default function HeroSection({ onShopNowClick, onInfoClick }) {
 
       {/* Layer Background Video */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* Background gradient cadangan sebelum video termuat */}
+        {/* Background gradient fallback */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#1a1a1a]" />
 
-        {!hasError && (
-          <video
-            ref={videoRef}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            onLoadedData={() => setIsVideoLoaded(true)}
-            onError={(e) => {
-              console.error('Error memuat video:', e);
-              setHasError(true);
-            }}
-            className={`w-full h-full object-cover transition-opacity duration-700 ${
-              isVideoLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <source src={videoSrc} type="video/mp4" />
-            Browser Anda tidak mendukung tag video HTML5.
-          </video>
-        )}
+        {/* Video Background */}
+        <video
+          ref={videoRef}
+          src={videoSrc}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
 
         {/* Overlay gelap agar teks di atas video tetap terbaca jelas */}
         <div className="absolute inset-0 bg-black/60 pointer-events-none" />
