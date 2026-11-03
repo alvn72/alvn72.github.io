@@ -5,7 +5,9 @@ import React, { useRef, useEffect } from 'react';
 export default function HeroSection({ onShopNowClick, onInfoClick }) {
   const videoRef = useRef(null);
 
-  const videoSrc = '/videoAja/heroSecToko.mp4';
+  // Mendukung nama file yang dipilih atau file cadangannya
+  const primaryVideo = '/videoAja/heroVideo.mp4';
+  const fallbackVideo = '/videoAja/heroSecToko.mp4';
 
   useEffect(() => {
     const video = videoRef.current;
@@ -16,7 +18,7 @@ export default function HeroSection({ onShopNowClick, onInfoClick }) {
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch((err) => {
-          console.warn('Autoplay info:', err);
+          console.warn('Autoplay terhambat:', err);
         });
       }
     }
@@ -25,26 +27,22 @@ export default function HeroSection({ onShopNowClick, onInfoClick }) {
   return (
     <section className="relative w-full h-[calc(100vh-5.5rem)] min-h-[500px] flex items-center justify-center overflow-hidden border-b border-[#2a2a2a] bg-[#0a0a0a]">
 
-      {/* Layer Background Video */}
-      <div className="absolute inset-0 z-0 overflow-hidden flex items-center justify-center">
-        {/* Background gradient fallback */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#1a1a1a]" />
+      {/* Background Video */}
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      >
+        <source src={primaryVideo} type="video/mp4" />
+        <source src={fallbackVideo} type="video/mp4" />
+      </video>
 
-        {/* Video tampil apa adanya (aspect ratio asli 16:9, tanpa terpotong/crop/zoom) */}
-        <video
-          ref={videoRef}
-          src={videoSrc}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          className="w-full h-full object-contain"
-        />
-
-        {/* Overlay gelap agar teks di atas video tetap terbaca jelas */}
-        <div className="absolute inset-0 bg-black/50 pointer-events-none" />
-      </div>
+      {/* Overlay Gelap */}
+      <div className="absolute inset-0 bg-black/50 z-[1] pointer-events-none" />
 
       {/* Layer Konten Teks */}
       <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center space-y-5">
