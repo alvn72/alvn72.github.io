@@ -23,14 +23,14 @@ export default function HeroSection({ onShopNowClick, onInfoClick }) {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center overflow-hidden border-b border-[#2a2a2a] bg-[#0a0a0a]">
+    <section className="relative w-full h-[calc(100vh-5.5rem)] min-h-[500px] flex items-center justify-center overflow-hidden border-b border-[#2a2a2a] bg-[#0a0a0a]">
 
       {/* Layer Background Video */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {/* Background gradient fallback */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#1a1a1a]" />
 
-        {/* Video Background */}
+        {/* Video Background Full Layar */}
         <video
           ref={videoRef}
           src={videoSrc}
@@ -48,7 +48,7 @@ export default function HeroSection({ onShopNowClick, onInfoClick }) {
 
       {/* Layer Konten Teks */}
       <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center space-y-5">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-white leading-tight">
           Selamat Datang di Toko Kami
         </h1>
         <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-xl mx-auto">
@@ -58,9 +58,9 @@ export default function HeroSection({ onShopNowClick, onInfoClick }) {
           <button
             onClick={onShopNowClick}
             className="
-              w-full sm:w-auto px-6 py-3
+              w-full sm:w-auto px-7 py-3.5
               bg-white text-black font-semibold text-sm
-              rounded hover:bg-gray-200 transition cursor-pointer
+              rounded hover:bg-gray-200 transition cursor-pointer shadow-lg
             "
           >
             Lihat Produk
@@ -68,7 +68,7 @@ export default function HeroSection({ onShopNowClick, onInfoClick }) {
           <button
             onClick={onInfoClick}
             className="
-              w-full sm:w-auto px-6 py-3
+              w-full sm:w-auto px-7 py-3.5
               border border-[#444] text-gray-300 font-medium text-sm
               rounded hover:bg-[#1a1a1a] hover:text-white transition cursor-pointer
             "
@@ -77,6 +77,18 @@ export default function HeroSection({ onShopNowClick, onInfoClick }) {
           </button>
         </div>
       </div>
+
+      {/* Indikator scroll ke bawah */}
+      <button
+        onClick={onShopNowClick}
+        aria-label="Scroll ke produk"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-gray-400 hover:text-white transition cursor-pointer animate-bounce flex flex-col items-center gap-1"
+      >
+        <span className="text-[10px] uppercase tracking-widest text-gray-500">Scroll</span>
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </button>
     </section>
   );
 }
